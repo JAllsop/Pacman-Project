@@ -10,3 +10,11 @@ TEST_CASE("test down movement")
     testPlayer.moveDown();
     CHECK(y +1 == testPlayer.getY());
 }
+
+TEST_CASE("test right movement")
+{
+    auto testPlayer = Player(40, 40);
+    auto x = testPlayer.getX();
+    testPlayer.moveRight();
+    CHECK(x +1 == testPlayer.getX());
+}

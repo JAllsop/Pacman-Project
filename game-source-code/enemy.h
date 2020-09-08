@@ -3,7 +3,7 @@
 
 #include "MovableEntity.h"
 
-class Enemy : public MovableEntity
+class Enemy
 {
 public:
     Enemy();

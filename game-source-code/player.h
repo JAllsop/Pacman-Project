@@ -5,13 +5,13 @@
 
 class Player : public MovableEntity
 {
-public:
-    Player();
-    virtual ~Player();
+    public:
+        Player(float width, float height);
+        virtual ~Player();
 
-protected:
+    protected:
 
-private:
+    private:
 };
 
 #endif // PLAYER_H

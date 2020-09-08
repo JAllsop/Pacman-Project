@@ -5,13 +5,16 @@
 
 class MovableEntity : public Entity
 {
-public:
-    MovableEntity();
-    virtual ~MovableEntity();
+    public:
+        MovableEntity(float width, float height);
+        virtual ~MovableEntity();
+        virtual void moveUp();
+        virtual void moveDown();
+        virtual void moveLeft();
+        virtual void moveRight();
+    protected:
 
-protected:
-
-private:
+    private:
 };
 
 #endif // MOVABLEENTITY_H

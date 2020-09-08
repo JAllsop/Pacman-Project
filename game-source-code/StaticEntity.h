@@ -3,7 +3,7 @@
 
 #include "entity.h"
 
-class StaticEntity : public Entity
+class StaticEntity
 {
 public:
     StaticEntity();

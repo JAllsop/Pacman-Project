@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player()
+Player::Player(float width, float height) : MovableEntity(width, height)
 {
     //ctor
 }
@@ -9,3 +9,4 @@ Player::~Player()
 {
     //dtor
 }
+

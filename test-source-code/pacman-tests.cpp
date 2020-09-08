@@ -1,8 +1,7 @@
 #include "../game-source-code/game.h"
 
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
-
 
 TEST_CASE("test down movement")
 {
@@ -38,3 +37,14 @@ TEST_CASE("test up movement")
     testPlayer.moveUp();
     CHECK(y - 1 == testPlayer.getY());
 }
+
+int main(int argc, char** argv) {
+    doctest::Context context;
+
+    int res = context.run();
+
+    if(context.shouldExit()) // important - query flags (and --exit) rely on the user doing this
+        return res;
+    system("pause");
+}
+

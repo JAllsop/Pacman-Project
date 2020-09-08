@@ -2,7 +2,7 @@
 #define PLAYERHANDLER_H
 
 #include "player.h"
-//#include "controller.h"
+#include "controller.h"
 
 class PlayerHandler
 {
@@ -16,7 +16,7 @@ class PlayerHandler
     private:
         shared_ptr<Player> player_;
         shared_ptr<sf::RenderWindow> window_;
-        //shared_ptr<Controller> controller_;
+        shared_ptr<Controller> controller_;
 };
 
 #endif // PLAYERHANDLER_H

@@ -3,7 +3,7 @@
 PlayerHandler::PlayerHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
 {
     player_ = make_shared<Player>(40,40);
-    //controller_ = make_shared<Controller>();
+    controller_ = make_shared<Controller>();
     //ctor
 }
 
@@ -20,7 +20,7 @@ void PlayerHandler::run()
 
 void PlayerHandler::update()
 {
-    //controller_->control(player_);
+    controller_->control(player_);
 }
 
 void PlayerHandler::render()

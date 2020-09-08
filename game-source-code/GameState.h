@@ -2,7 +2,7 @@
 #define GAMESTATE_H
 
 #include "state.h"
-//#include "PlayerHandler.h"
+#include "PlayerHandler.h"
 
 class GameState : public State
 {
@@ -19,7 +19,7 @@ protected:
 
 private:
     shared_ptr<sf::RenderWindow> window_;
-    //shared_ptr<PlayerHandler> playerHandler_; // this will handle the player
+    shared_ptr<PlayerHandler> playerHandler_; // this will handle the player
 };
 
 #endif // GAMESTATE_H

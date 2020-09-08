@@ -29,3 +29,12 @@ TEST_CASE("test left movement")
     testPlayer.moveLeft();
     CHECK(x - 1 == testPlayer.getX());
 }
+
+TEST_CASE("test up movement")
+{
+    auto testPlayer = Player(40, 40);
+    testPlayer.setPosition(10, 10);
+    auto y = testPlayer.getY();
+    testPlayer.moveUp();
+    CHECK(y - 1 == testPlayer.getY());
+}

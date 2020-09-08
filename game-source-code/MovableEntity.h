@@ -5,13 +5,13 @@
 
 class MovableEntity : public Entity
 {
-    public:
-        MovableEntity();
-        virtual ~MovableEntity();
+public:
+    MovableEntity();
+    virtual ~MovableEntity();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // MOVABLEENTITY_H

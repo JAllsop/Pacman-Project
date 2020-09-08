@@ -1,8 +1,20 @@
 #include "game.h"
 
-Game::Game(int gameWidth, int gameHeight):gameWidth_{gameWidth}, gameHeight_{gameHeight}
+Game::Game()
 {
+
+    gameWidth_ = 1600;
+    gameHeight_ = 900;
     initWindow();
+
+    isMenuState_ = true;
+    isGameState_ = false;
+    isEndState_ = false;
+
+    menuState_ = make_shared<MenuState>(window_);
+    gameState_ = make_shared<GameState>(window_);
+
+    initState();
 }
 
 Game::~Game()
@@ -10,42 +22,68 @@ Game::~Game()
     //dtor
 }
 
-// Game loop
 void Game::run()
 {
-    while(window->isOpen()){
-        update();
-        render();
+    while(window_->isOpen())
+    {
+        updateEvents();
+        updateStates();
+        runState();
     }
-}
-
-void Game::update()
-{
-    updateEvents();
-}
-
-void Game::render()
-{
-    window->clear();
-
-    // Render stuff
-
-    window->display();
-
 }
 
 void Game::updateEvents()
 {
-    while(window->pollEvent(event)) {
-	   if(event.type == sf::Event::Closed)
-       {
-           window->close();
-       }
-	}
+    while(window_->pollEvent(event_))
+    {
+        switch(event_.type)
+        {
+        case sf::Event::EventType::Closed:
+            window_->close();
+            break;
+        case sf::Event::EventType::KeyPressed:
+            if(sf::Keyboard::Enter == event_.key.code && isMenuState_ == true && isGameState_ == false && isEndState_ == false)
+            {
+                cout << "GameState" << endl;
+                isMenuState_ = false;
+                isGameState_ = true;
+                isEndState_ = false;
+            }
+            break;
+        }
+    }
 }
-// Initialise window
+
+void Game::updateStates()
+{
+    // When we press backspace we want to go back to the menu state
+    //if(stateContainer_.size() > MIN_NUM_STATES && isMenuState_ == true)
+    //{
+    //    stateContainer_.pop();
+    //}
+    if (!(stateContainer_.empty()) && isGameState_ == true)
+    {
+        stateContainer_.push(gameState_);
+    }
+    // Still need to add the end game state
+}
+
+void Game::runState()
+{
+    stateContainer_.top()->run();
+}
+
+void Game::initState()
+{
+    if (stateContainer_.empty() && isMenuState_ == true)
+    {
+        stateContainer_.push(menuState_);
+    }
+}
+
 void Game::initWindow()
 {
-    window = make_shared<sf::RenderWindow>(sf::VideoMode(gameWidth_, gameHeight_), "SFML Pacman");
-    window->setVerticalSyncEnabled(true);
+    window_ = make_shared<sf::RenderWindow>(sf::VideoMode(gameWidth_, gameHeight_), "SFML Pacman");
+    window_->setVerticalSyncEnabled(true);
 }
+

@@ -5,13 +5,13 @@
 
 class StaticEntity : public Entity
 {
-    public:
-        StaticEntity();
-        virtual ~StaticEntity();
+public:
+    StaticEntity();
+    virtual ~StaticEntity();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // STATICENTITY_H

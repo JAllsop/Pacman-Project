@@ -5,13 +5,13 @@
 
 class Key : public StaticEntity
 {
-    public:
-        Key();
-        virtual ~Key();
+public:
+    Key();
+    virtual ~Key();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // KEY_H

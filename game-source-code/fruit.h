@@ -5,13 +5,13 @@
 
 class Fruit : public StaticEntity
 {
-    public:
-        Fruit();
-        virtual ~Fruit();
+public:
+    Fruit();
+    virtual ~Fruit();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // FRUIT_H

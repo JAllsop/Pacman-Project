@@ -5,13 +5,19 @@
 
 class MenuState : public State
 {
-    public:
-        MenuState();
-        virtual ~MenuState();
+public:
+    MenuState(shared_ptr<sf::RenderWindow> window);
+    virtual ~MenuState();
+    virtual void run();
+    virtual void loadAssets();
+    virtual void update();
 
-    protected:
+protected:
 
-    private:
+private:
+    shared_ptr<sf::RenderWindow> window_;
+    sf::Font font;
+    vector<sf::Text> texts_;
 };
 
 #endif // MENUSTATE_H

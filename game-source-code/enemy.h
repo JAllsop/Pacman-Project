@@ -5,13 +5,13 @@
 
 class Enemy : public MovableEntity
 {
-    public:
-        Enemy();
-        virtual ~Enemy();
+public:
+    Enemy();
+    virtual ~Enemy();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // ENEMY_H

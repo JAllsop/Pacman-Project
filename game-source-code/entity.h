@@ -9,18 +9,21 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <stack>
+#include <vector>
+
 
 using namespace std;
 
 class Entity
 {
-    public:
-        Entity();
-        virtual ~Entity();
+public:
+    Entity();
+    virtual ~Entity();
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // ENTITY_H

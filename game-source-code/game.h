@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "state.h"
 #include "MenuState.h"
 #include "GameState.h"
+#include "EndState.h"
 
 #define MAX_NUM_STATES 3
 #define MIN_NUM_STATES 1
@@ -42,6 +42,7 @@ private:
     // Objects
     shared_ptr<State> menuState_;
     shared_ptr<State> gameState_;
+    shared_ptr<State> endState_;
     stack<shared_ptr<State>> stateContainer_;
 
 };

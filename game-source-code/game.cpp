@@ -2,7 +2,6 @@
 
 Game::Game()
 {
-
     gameWidth_ = 1600;
     gameHeight_ = 900;
     initWindow();
@@ -13,6 +12,7 @@ Game::Game()
 
     menuState_ = make_shared<MenuState>(window_);
     gameState_ = make_shared<GameState>(window_);
+    endState_ = make_shared<EndState>(window_);
 
     initState();
 }
@@ -65,6 +65,10 @@ void Game::updateStates()
     {
         stateContainer_.push(gameState_);
     }
+    if (gameState_->isStateEnd())
+    {
+        stateContainer_.push(endState_);
+    }
     // Still need to add the end game state
 }
 
@@ -85,5 +89,5 @@ void Game::initWindow()
 {
     window_ = make_shared<sf::RenderWindow>(sf::VideoMode(gameWidth_, gameHeight_), "SFML Pacman");
     window_->setVerticalSyncEnabled(true);
+    window_->setKeyRepeatEnabled(false);
 }
-

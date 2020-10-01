@@ -16,15 +16,16 @@ using namespace std;
 
 class State
 {
-public:
-    State();
-    virtual ~State();
-    virtual void run() = 0;
-    virtual void loadAssets() = 0;
-    virtual void  update() = 0;
-protected:
+    public:
+        State();
+        virtual ~State();
+        virtual void run() = 0;
+        virtual void loadAssets() = 0;
+        virtual void  update() = 0;
+        virtual bool isStateEnd() = 0;
+    protected:
 
-private:
+    private:
 };
 
 #endif // STATE_H

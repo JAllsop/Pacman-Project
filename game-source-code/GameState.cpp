@@ -2,7 +2,8 @@
 
 GameState::GameState(shared_ptr<sf::RenderWindow> window) : State(), window_{window}
 {
-    playerHandler_ =  make_shared<PlayerHandler>(window_);
+    //construct handlers
+    mazeHandler_ = make_shared<MazeHandler> (window);
     //ctor
 }
 
@@ -23,10 +24,20 @@ void GameState::loadAssets()
 
 void GameState::update()
 {
+    mazeHandler_->run();
     //boardhandler->run();
-    playerHandler_->run();
+    //playerHandler_->run();
     //enemyHandler->run();
     //fruitHandler->run();
     //keyHandler->run();
 
+}
+
+bool GameState::isStateEnd()
+{
+    if (mazeHandler_->getPlayerState() == true)
+    {
+        return true;
+    }
+    return false;
 }

@@ -1,6 +1,6 @@
 #include "fruit.h"
 
-Fruit::Fruit()
+Fruit::Fruit(float width, float height, sf::Color color) : StaticEntity(width,height,color)
 {
     //ctor
 }

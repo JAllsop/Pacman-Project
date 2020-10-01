@@ -3,10 +3,10 @@
 
 #include "MovableEntity.h"
 
-class Enemy
+class Enemy : public MovableEntity
 {
 public:
-    Enemy();
+    Enemy(float width, float height, sf::Color color);
     virtual ~Enemy();
 
 protected:

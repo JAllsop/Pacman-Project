@@ -3,15 +3,19 @@
 
 #include "entity.h"
 
-class StaticEntity
+class StaticEntity : public Entity
 {
-public:
-    StaticEntity();
-    virtual ~StaticEntity();
+    public:
+        StaticEntity(float width, float height , sf::Color color);
+        virtual ~StaticEntity();
+        virtual void moveUp();
+        virtual void moveDown();
+        virtual void moveLeft();
+        virtual void moveRight();
 
-protected:
+    protected:
 
-private:
+    private:
 };
 
 #endif // STATICENTITY_H

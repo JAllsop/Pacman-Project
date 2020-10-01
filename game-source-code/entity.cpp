@@ -1,9 +1,10 @@
 #include "entity.h"
 
-Entity::Entity(float width, float height) : width_{width}, height_{height}
+Entity::Entity(float width, float height, sf::Color color) : height_{height}, width_{width}
 {
+    isAlive_ = true;
     entity_ = make_shared<sf::RectangleShape>(sf::Vector2f(width_,height_));
-    entity_->setFillColor(sf::Color::Green);
+    entity_->setFillColor(color);
     entity_->setPosition(0,0);
     //ctor
 }
@@ -16,6 +17,11 @@ Entity::~Entity()
 void Entity::setPosition(float xPos, float yPos)
 {
     entity_->setPosition(xPos,yPos);
+}
+
+void Entity::setColor(sf::Color color)
+{
+    entity_->setFillColor(color);
 }
 
 float Entity::getX()
@@ -48,7 +54,22 @@ float Entity::getRight()
     return (getX() + width_);
 }
 
+float Entity::getWidth()
+{
+    return width_;
+}
+
+float Entity::getHeight()
+{
+    return height_;
+}
+
 shared_ptr<sf::RectangleShape> Entity::getEntity()
 {
     return entity_;
+}
+
+bool Entity::isAlive()
+{
+    return isAlive_;
 }

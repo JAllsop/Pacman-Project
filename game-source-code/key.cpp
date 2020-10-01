@@ -1,6 +1,6 @@
 #include "key.h"
 
-Key::Key()
+Key::Key(float width, float height, sf::Color color) : StaticEntity(width,height,color)
 {
     //ctor
 }

@@ -6,7 +6,7 @@
 class Player : public MovableEntity
 {
     public:
-        Player(float width, float height);
+        Player(float width,float height ,sf::Color color);
         virtual ~Player();
 
     protected:

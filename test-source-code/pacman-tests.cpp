@@ -5,15 +5,6 @@
 
 #define l 40.0f
 
-TEST_CASE("maze test")
-{
-    std::shared_ptr<sf::RenderWindow> window;
-    window = make_shared<sf::RenderWindow>(sf::VideoMode(1600, 900), "test");
-    auto testInstance = MazeHandler(window);
-
-    window->setVerticalSyncEnabled(true);
-}
-
 TEST_CASE("Player Basic Movement")
 {
     auto testPlayer = Player(l, l, sf::Color::Blue);
@@ -58,35 +49,13 @@ TEST_CASE("Enemy Basic Movement")
     CHECK(x - l == testPlayer.getX());
 }
 
-/*
-TEST_CASE("test right movement")
+TEST_CASE("maze test")
 {
-    auto testPlayer = MoveableEntity(40, 40);
-    auto x = testPlayer.getX();
-    testPlayer.moveRight();
-    CHECK(x +1 == testPlayer.getX());
+    std::shared_ptr<sf::RenderWindow> window;
+    window = make_shared<sf::RenderWindow>(sf::VideoMode(1600, 900), "test");
+    auto testInstance = MazeHandler(window);
+    testInstance->get
 }
-
-
-TEST_CASE("test left movement")
-{
-    auto testPlayer = MoveableEntity(40, 40);
-    testPlayer.setPosition(10, 10);
-    auto x = testPlayer.getX();
-    testPlayer.moveLeft();
-    CHECK(x - 1 == testPlayer.getX());
-}
-
-TEST_CASE("test up movement")
-{
-    auto testPlayer = MoveableEntity(40, 40);
-    testPlayer.setPosition(10, 10);
-    auto y = testPlayer.getY();
-    testPlayer.moveUp();
-    CHECK(y - 1 == testPlayer.getY());
-}
-*/
-
 
 int main(int argc, char** argv) {
 

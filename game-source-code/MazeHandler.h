@@ -18,6 +18,9 @@ public:
     bool getPlayerState();
     bool allFruitsEaten();
     void render();// This is part of the display PS: change later
+    vector<vector<shared_ptr<Entity>>> getEntities();
+    vector<vector<char>> getCharMaze();
+    shared_ptr<Maze> getMaze();
 
 protected:
 
@@ -35,7 +38,7 @@ private:
     int playerY;
     int enemyX;
     int enemyY;
-    // Keep track of entities
+    // Starting Co-ord of Moving Entities
     int eEntityX;
     int eEntityY;
     int pEntityX;

@@ -586,3 +586,18 @@ bool MazeHandler::allFruitsEaten()
 {
     return isAllFruitsEaten;
 }
+
+vector<vector<shared_ptr<Entity>>> MazeHandler::getEntities()
+{
+    return m_;
+}
+
+vector<vector<char>> MazeHandler::getCharMaze()
+{
+    return mChar_;
+}
+
+shared_ptr<Maze> MazeHandler::getMaze()
+{
+    return maze_;
+}

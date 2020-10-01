@@ -26,6 +26,7 @@ TEST_CASE("Player Basic Movement")
     testPlayer.moveLeft();
     CHECK(x - l == testPlayer.getX());
 }
+
 //inheritance structure needs to be implemented correctly
 TEST_CASE("Enemy Basic Movement")
 {
@@ -49,14 +50,15 @@ TEST_CASE("Enemy Basic Movement")
     CHECK(x - l == testPlayer.getX());
 }
 
-TEST_CASE("maze test")
+/*requires more seperation of logic in order to simulate collision testing correctly
+TEST_CASE("Maze Test")
 {
     std::shared_ptr<sf::RenderWindow> window;
     window = make_shared<sf::RenderWindow>(sf::VideoMode(1600, 900), "test");
     auto testInstance = MazeHandler(window);
-    testInstance->get
+    testInstance->getMaze();
 }
-
+*/
 int main(int argc, char** argv) {
 
     doctest::Context context;

@@ -35,6 +35,28 @@ TEST_CASE("Player Basic Movement")
     testPlayer.moveLeft();
     CHECK(x - l == testPlayer.getX());
 }
+//inheritance structure needs to be implemented correctly
+TEST_CASE("Enemy Basic Movement")
+{
+    auto testEnemy = Enemy(l, l, sf::Color::Blue);
+    testPlayer.setPosition(500, 500);
+
+    auto y = testEnemy.getY();
+    testPlayer.moveDown();
+    CHECK(y + l == testPlayer.getY());
+
+    y = testEnemy.getY();
+    testPlayer.moveUp();
+    CHECK(y - l == testPlayer.getY());
+
+    auto x = testEnemy.getX();
+    testPlayer.moveRight();
+    CHECK(x + l == testPlayer.getX());
+
+    x = testEnemy.getX();
+    testPlayer.moveLeft();
+    CHECK(x - l == testPlayer.getX());
+}
 
 /*
 TEST_CASE("test right movement")

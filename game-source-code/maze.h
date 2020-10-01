@@ -55,7 +55,7 @@ private:
     shared_ptr<PowerPellet> powerPellet_;
     //Var
     int maxFruits;
-    string level_ = "resources/testMaze.txt";
+    string level_ = "resources/maze.txt";
 };
 
 #endif // MAZE_H

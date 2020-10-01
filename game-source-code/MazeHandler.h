@@ -21,6 +21,8 @@ public:
     vector<vector<shared_ptr<Entity>>> getEntities();
     vector<vector<char>> getCharMaze();
     shared_ptr<Maze> getMaze();
+    int getEnemyInitialX();
+    int getEnemyInitialY();
 
 protected:
 

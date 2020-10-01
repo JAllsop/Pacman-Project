@@ -601,3 +601,12 @@ shared_ptr<Maze> MazeHandler::getMaze()
 {
     return maze_;
 }
+
+int MazeHandler::getEnemyInitialX()
+{
+    return eEntityX;
+}
+int MazeHandler::getEnemyInitialY()
+{
+    return eEntityY;
+}

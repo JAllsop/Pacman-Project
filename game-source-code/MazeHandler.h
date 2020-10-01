@@ -35,7 +35,7 @@ private:
     int playerY;
     int enemyX;
     int enemyY;
-    // Keep track of enetities
+    // Keep track of entities
     int eEntityX;
     int eEntityY;
     int pEntityX;

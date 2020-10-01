@@ -48,7 +48,7 @@ void Maze::read()
     // we need to check if this fails
     auto temp = ' ';
     ifstream mazeFile;
-    mazeFile.open("resources/maze.txt");
+    mazeFile.open(level_);
     while(!mazeFile.eof())
     {
         for(int i = 0; i < MAX_MAZE_X; i++)
@@ -152,4 +152,9 @@ void Maze::update()// Screen related this is suppose to be on the display part
 
 void Maze::loadAssets()
 {
+}
+
+void Maze::setLevel(string level)
+{
+    level = level_;
 }

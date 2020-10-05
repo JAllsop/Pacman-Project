@@ -51,12 +51,12 @@ void Maze::read()
     mazeFile.open(level_);
     while(!mazeFile.eof())
     {
-        for(int i = 0; i < MAX_MAZE_X; i++)
+        for(auto i = 0; i < MAX_MAZE_X; ++i)
         {
             char_.push_back(vector<char>());
-            for(int j = 0; j < MAX_MAZE_Y; j++)
+            for(auto j = 0; j < MAX_MAZE_Y; ++j)
             {
-                mazeFile>>temp;
+                mazeFile >> temp;
                 char_[i].push_back(temp);
             }
         }
@@ -73,7 +73,8 @@ void Maze::setUp()
         {
             if(char_[i][j] == 'w')
             {
-                wall_ = make_shared<Wall>(entityWidth_,entityHeight_,sf::Color::Blue);
+                auto wall_ = make_shared<Wall>(entityWidth_,entityHeight_,sf::Color::Blue);
+                walls_.push_back(wall_);
                 maze_[i].push_back(wall_);
             }
             else if(char_[i][j] == 'p')
@@ -88,28 +89,28 @@ void Maze::setUp()
             }
             else if(char_[i][j] == '.')
             {
-                path_ = make_shared<Path>(entityWidth_,entityHeight_,sf::Color::Transparent);
+                auto path_ = make_shared<Path>(entityWidth_,entityHeight_,sf::Color::Transparent);
                 maze_[i].push_back(path_);
             }
             else if(char_[i][j] == 'k')
             {
-                key_ = make_shared<Key>(entityWidth_,entityHeight_,sf::Color::Yellow);
+                auto key_ = make_shared<Key>(entityWidth_,entityHeight_,sf::Color::Yellow);
                 maze_[i].push_back(key_);
             }
             else if(char_[i][j] == 'd')
             {
-                door_ = make_shared<Door>(entityWidth_,entityHeight_,sf::Color(53,19,0));
+                auto door_ = make_shared<Door>(entityWidth_,entityHeight_,sf::Color(53,19,0));
                 maze_[i].push_back(door_);
             }
             else if(char_[i][j] == 'f')
             {
-                fruit_ = make_shared<Fruit>(entityWidth_,entityHeight_,sf::Color(166,61,0));
+                auto fruit_ = make_shared<Fruit>(entityWidth_,entityHeight_,sf::Color(166,61,0));
                 maze_[i].push_back(fruit_);
                 maxFruits++;
             }
             else if(char_[i][j] == 'u')
             {
-                powerPellet_ = make_shared<PowerPellet>(entityWidth_,entityHeight_,sf::Color::White);
+                auto powerPellet_ = make_shared<PowerPellet>(entityWidth_,entityHeight_,sf::Color::White);
                 maze_[i].push_back(powerPellet_);
             }
         }

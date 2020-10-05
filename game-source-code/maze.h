@@ -36,6 +36,12 @@ protected:
 private:
     // Variables
     vector<vector<char>> char_;// holder for inputs
+    vector<shared_ptr<Enemy>> enemies_;
+    vector<shared_ptr<Key>> keys_;
+    vector<shared_ptr<Fruit>> fruits_;
+    vector<shared_ptr<Door>> doors_;
+    vector<shared_ptr<Wall>> walls_;
+    vector<shared_ptr<PowerPellet>> PowerPellets_;
     float entityWidth_;
     float entityHeight_;
     float startXPos;
@@ -47,12 +53,12 @@ private:
     shared_ptr<Player> player_;
     shared_ptr<Enemy> enemy_;
     // Static entities
-    shared_ptr<Wall> wall_;
-    shared_ptr<Path> path_;
-    shared_ptr<Key> key_;
-    shared_ptr<Fruit> fruit_;
-    shared_ptr<Door> door_;
-    shared_ptr<PowerPellet> powerPellet_;
+    //shared_ptr<Wall> wall_;
+    //shared_ptr<Path> path_;
+    //shared_ptr<Key> key_;
+    //shared_ptr<Fruit> fruit_;
+    //shared_ptr<Door> door_;
+    //shared_ptr<PowerPellet> powerPellet_;
     //Var
     int maxFruits;
     string level_ = "resources/maze.txt";

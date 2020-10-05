@@ -22,6 +22,7 @@ public:
     void init();
     void read();
     void setUp();
+    void loadEntity(const char entity_m, const int x, const int y);
     void update();
     void loadAssets();
     //getters
@@ -41,7 +42,7 @@ private:
     vector<shared_ptr<Fruit>> fruits_;
     vector<shared_ptr<Door>> doors_;
     vector<shared_ptr<Wall>> walls_;
-    vector<shared_ptr<PowerPellet>> PowerPellets_;
+    vector<shared_ptr<PowerPellet>> powerPellets_;
     float entityWidth_;
     float entityHeight_;
     float startXPos;
@@ -61,7 +62,7 @@ private:
     //shared_ptr<PowerPellet> powerPellet_;
     //Var
     int maxFruits;
-    string level_ = "resources/maze.txt";
+    string level_;
 };
 
 #endif // MAZE_H

@@ -16,6 +16,8 @@
 #include <algorithm>
 #include <ctime>
 
+#define blockSize 40
+
 using namespace std;
 
 class Entity

@@ -18,9 +18,10 @@ public:
     bool allFruitsEaten();
 
     void render();// This is part of the display PS: change later
+    void draw();
 
-    shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities);
-    shared_ptr<Entity> playerCollision(shared_ptr<Player> Player);
+    shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, const string type);
+    shared_ptr<Entity> playerCollision(shared_ptr<Player> player);
     shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
     bool resolveCollision(shared_ptr<Player> Player);
 
@@ -32,30 +33,32 @@ public:
     shared_ptr<Maze> getMaze();
 
 
-    void setUpPlayer();
-    void setUpEnemy();
-    vector<vector<shared_ptr<Entity>>> getEntities();
-    vector<vector<char>> getCharMaze();
-    int getEnemyInitialX();
-    int getEnemyInitialY();
+    //void setUpPlayer();
+    //void setUpEnemy();
+    //vector<vector<shared_ptr<Entity>>> getEntities();
+    //vector<vector<char>> getCharMaze();
+    //int getEnemyInitialX();
+    //int getEnemyInitialY();
 
 protected:
 
 private:
 
     shared_ptr<Maze> maze_;
+    /*
     //Containers
     vector<vector<shared_ptr<Entity>>> m_;
     vector<vector<char>> mChar_;
     //Handlers
     shared_ptr<PlayerHandler> playerHandler_;
     shared_ptr<EnemyHandler> enemyHandler_;
+    /*
     //Window
     //Keeps track of char vector
-    int playerX;
-    int playerY;
-    int enemyX;
-    int enemyY;
+    //int playerX;
+    //int playerY;
+    //int enemyX;
+    //int enemyY;
     // Starting Co-ord of Moving Entities
     int eEntityX;
     int eEntityY;
@@ -63,6 +66,7 @@ private:
     int pEntityY;
     float ePosX;
     float ePosY;
+    */
     // Random rumber gen
     int random;
     //Direction indicators

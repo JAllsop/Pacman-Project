@@ -10,7 +10,7 @@ Controller::~Controller()
     //dtor
 }
 
-void Controller::control(shared_ptr<Entity> player)
+void Controller::control(shared_ptr<Player> player)
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {

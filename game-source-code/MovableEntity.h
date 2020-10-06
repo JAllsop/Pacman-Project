@@ -8,10 +8,10 @@ class MovableEntity : public Entity
     public:
         MovableEntity(float width, float height , sf::Color color);
         virtual ~MovableEntity();
-        virtual void moveUp();
-        virtual void moveDown();
-        virtual void moveLeft();
-        virtual void moveRight();
+        void moveUp();
+        void moveDown();
+        void moveLeft();
+        void moveRight();
     protected:
 
     private:

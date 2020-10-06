@@ -2,8 +2,8 @@
 
 Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resources/maze.txt"}
 {
-    startXPos = 50;// control maze top left location X
-    startYPos = 50;// control maze top left location Y
+    //startXPos = 50;// control maze top left location X
+    //startYPos = 50;// control maze top left location Y
 
     // all entities have the same dimension, this makes it easier to work with
     //entityWidth_ = 40.0;
@@ -30,6 +30,7 @@ void Maze::init()
 
 void Maze::read()
 {
+    /*
     // we need to check if this fails
     auto temp = ' ';
     ifstream mazeFile(level_);
@@ -47,14 +48,15 @@ void Maze::read()
         }
     }
     mazeFile.close();
-
+    */
     //error check needed
-    mazeFile.open(level_);
-    while(mazeFile)
+    ifstream fileReader(level_);
+    fileReader.open(level_);
+    while(fileReader)
     {
         auto line = ""s;
         auto lineNum{0};
-        while (getline(mazeFile, line))
+        while (getline(fileReader, line))
         {
             for(auto i = 0; i != line.size(); ++i)
             {
@@ -65,7 +67,7 @@ void Maze::read()
             lineNum++;
         }
     }
-    mazeFile.close();
+    fileReader.close();
 }
 
 void Maze::loadEntity(const char entity_, const int x, const int y)
@@ -84,6 +86,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
             auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
             fruit_->setPosition(x*blockSize, y*blockSize);
             fruits_.push_back(fruit_);
+            maxFruits++;
         }
         break;
     case 'd' :
@@ -123,57 +126,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
    }
 }
 
-shared_ptr<Player> Maze::getPlayer()
-{
-    return player_;
-}
-
-vector<shared_ptr<Enemy>> Maze::getEnemies()
-{
-    return enemies_;
-}
-
-vector<shared_ptr<Key>> Maze::getKeys()
-{
-    return keys_;
-}
-
-vector<shared_ptr<Door>> Maze::getDoors()
-{
-    return doors_;
-}
-
-vector<shared_ptr<Wall>> Maze::getWalls()
-{
-    return walls_;
-}
-
-vector<shared_ptr<Fruit>> Maze::getFruits()
-{
-    return fruits_;
-}
-
-vector<shared_ptr<PowerPellet>> Maze::getPowerPellets()
-{
-    return powerPellets_;
-}
-
-vector<vector<shared_ptr<Entity>>> Maze::getMaze()
-{
-    return maze_;
-}
-
-vector<vector<char>> Maze:: getCharMaze()
-{
-    return char_;
-}
-
-int Maze::getMaxFruits()
-{
-    return maxFruits;
-}
-
-
+/*
 void Maze::setUp()
 {
     for(int i = 0; i < MAX_MAZE_X; i++)
@@ -188,7 +141,7 @@ void Maze::setUp()
             }
             else if(char_[i][j] == 'p')
             {
-                //player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
+                player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
                 maze_[i].push_back(player_);
             }
             else if(char_[i][j] == 'e')
@@ -225,7 +178,58 @@ void Maze::setUp()
         }
     }
 }
+*/
+shared_ptr<Player> Maze::getPlayer()
+{
+    return player_;
+}
 
+vector<shared_ptr<Enemy>> Maze::getEnemies()
+{
+    return enemies_;
+}
+
+vector<shared_ptr<Key>> Maze::getKeys()
+{
+    return keys_;
+}
+
+vector<shared_ptr<Door>> Maze::getDoors()
+{
+    return doors_;
+}
+
+vector<shared_ptr<Wall>> Maze::getWalls()
+{
+    return walls_;
+}
+
+vector<shared_ptr<Fruit>> Maze::getFruits()
+{
+    return fruits_;
+}
+
+vector<shared_ptr<PowerPellet>> Maze::getPowerPellets()
+{
+    return powerPellets_;
+}
+/*
+vector<vector<shared_ptr<Entity>>> Maze::getMaze()
+{
+    return maze_;
+}
+
+vector<vector<char>> Maze:: getCharMaze()
+{
+    return char_;
+}
+*/
+int Maze::getMaxFruits()
+{
+    return maxFruits;
+}
+
+/*
 void Maze::update()// Screen related this is suppose to be on the display part
 {
     for(int i = 0; i < MAX_MAZE_X; i++)
@@ -263,7 +267,7 @@ void Maze::update()// Screen related this is suppose to be on the display part
 void Maze::loadAssets()
 {
 }
-
+*/
 void Maze::setLevel(string level)
 {
     level = level_;

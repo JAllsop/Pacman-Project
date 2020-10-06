@@ -2,7 +2,7 @@
 
 Entity::Entity(float width, float height, sf::Color color) : height_{height}, width_{width}
 {
-    isAlive_ = true;
+    //isAlive_ = true;
     entity_ = make_shared<sf::RectangleShape>(sf::Vector2f(width_,height_));
     entity_->setFillColor(color);
     entity_->setPosition(0,0);
@@ -53,7 +53,7 @@ float Entity::getRight()
 {
     return (getX() + width_);
 }
-
+/*
 float Entity::getWidth()
 {
     return width_;
@@ -63,13 +63,15 @@ float Entity::getHeight()
 {
     return height_;
 }
-
+*/
 shared_ptr<sf::RectangleShape> Entity::getEntity()
 {
     return entity_;
 }
 
+/*
 bool Entity::isAlive()
 {
     return isAlive_;
 }
+*/

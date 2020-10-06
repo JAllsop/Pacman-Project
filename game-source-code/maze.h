@@ -33,10 +33,10 @@ public:
     vector<shared_ptr<PowerPellet>> getPowerPellets();
 
     void setLevel(string level_);
-
+    /*
     vector<vector<shared_ptr<Entity>>> getMaze();
     vector<vector<char>> getCharMaze();
-
+    */
 protected:
 
 private:

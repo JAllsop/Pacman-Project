@@ -9,7 +9,7 @@ class Controller
 public:
     Controller();
     virtual ~Controller();
-    void control(shared_ptr<Entity> player);
+    void control(shared_ptr<Player> player);
     void controlAI(shared_ptr<Enemy> enemy);
 protected:
 

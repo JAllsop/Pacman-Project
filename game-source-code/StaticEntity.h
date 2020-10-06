@@ -8,10 +8,6 @@ class StaticEntity : public Entity
     public:
         StaticEntity(float width, float height , sf::Color color);
         virtual ~StaticEntity();
-        virtual void moveUp();
-        virtual void moveDown();
-        virtual void moveLeft();
-        virtual void moveRight();
 
     protected:
 

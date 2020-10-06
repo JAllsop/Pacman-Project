@@ -11,24 +11,37 @@ public:
     MazeHandler(shared_ptr<sf::RenderWindow> window);
     virtual ~MazeHandler();
     void run();
-    void setUpPlayer();
-    void setUpEnemy();
+
     void updatePlayer();
     void updateAI();
     bool getPlayerState();
     bool allFruitsEaten();
+
     void render();// This is part of the display PS: change later
+
+    shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities);
+    shared_ptr<Entity> playerCollision(shared_ptr<Player> Player);
+    shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
+    bool resolveCollision(shared_ptr<Player> Player);
+
+    void playerMoveDown();
+    void playerMoveUp();
+    void playerMoveRight();
+    void playerMoveLeft();
+
+    shared_ptr<Maze> getMaze();
+
+
+    void setUpPlayer();
+    void setUpEnemy();
     vector<vector<shared_ptr<Entity>>> getEntities();
     vector<vector<char>> getCharMaze();
-    shared_ptr<Maze> getMaze();
     int getEnemyInitialX();
     int getEnemyInitialY();
-    shared_ptr<Entity> enemyCollision(Enemy enemy);
 
 protected:
 
 private:
-    enum class Type{ Player, Enemy, Wall, Fruit, Door, Key, PowerPellet};
 
     shared_ptr<Maze> maze_;
     //Containers

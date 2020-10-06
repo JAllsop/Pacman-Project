@@ -6,8 +6,8 @@ Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resou
     startYPos = 50;// control maze top left location Y
 
     // all entities have the same dimension, this makes it easier to work with
-    entityWidth_ = 40.0;
-    entityHeight_ = 40.0;
+    //entityWidth_ = 40.0;
+    //entityHeight_ = 40.0;
     maxFruits = 0;
     // Make sure containers are empty
     char_.clear();
@@ -19,21 +19,6 @@ Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resou
 Maze::~Maze()
 {
     //dtor
-}
-
-vector<vector<shared_ptr<Entity>>> Maze::getMaze()
-{
-    return maze_;
-}
-
-vector<vector<char>> Maze:: getCharMaze()
-{
-    return char_;
-}
-
-int Maze::getMaxFruits()
-{
-    return maxFruits;
 }
 
 void Maze::init()
@@ -63,7 +48,7 @@ void Maze::read()
     }
     mazeFile.close();
 
-    //test for level reader
+    //error check needed
     mazeFile.open(level_);
     while(mazeFile)
     {
@@ -73,10 +58,10 @@ void Maze::read()
         {
             for(auto i = 0; i != line.size(); ++i)
             {
-                cout << line.at(i);
+                //cout << line.at(i);
                 loadEntity(line.at(i), i, lineNum);
             }
-            cout << "\n";
+            //cout << "\n";
             lineNum++;
         }
     }
@@ -86,57 +71,108 @@ void Maze::read()
 void Maze::loadEntity(const char entity_, const int x, const int y)
 {
     switch(entity_)
-    {//remove setPosition for alternate or standard object constructor
+    {//remove setPosition & Colour for alternate or standard object constructor
     case 'w' :
         {
-            auto wall__ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
-            wall__->setPosition(x*blockSize, y*blockSize);
-            walls_.push_back(wall__);
+            auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
+            wall_->setPosition(x*blockSize, y*blockSize);
+            walls_.push_back(wall_);
         }
         break;
     case 'f' :
         {
-            auto fruit__ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
-            fruit__->setPosition(x*blockSize, y*blockSize);
-            fruits_.push_back(fruit__);
+            auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
+            fruit_->setPosition(x*blockSize, y*blockSize);
+            fruits_.push_back(fruit_);
         }
         break;
     case 'd' :
         {
-            auto door__ = make_shared<Door>(blockSize,blockSize,sf::Color(53,19,0));
-            door__->setPosition(x*blockSize, y*blockSize);
-            doors_.push_back(door__);
+            auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color(53,19,0));
+            door_->setPosition(x*blockSize, y*blockSize);
+            doors_.push_back(door_);
         }
         break;
     case 'k' :
         {
-            auto key__ = make_shared<Key>(blockSize,blockSize,sf::Color::Yellow);
-        key__->setPosition(x*blockSize, y*blockSize);
-        keys_.push_back(key__);
+            auto key_ = make_shared<Key>(blockSize,blockSize,sf::Color::Yellow);
+            key_->setPosition(x*blockSize, y*blockSize);
+            keys_.push_back(key_);
         }
         break;
     case 'u' :
         {
-            auto powerPellet__ = make_shared<PowerPellet>(blockSize,blockSize,sf::Color::White);
-            powerPellet__->setPosition(x*blockSize, y*blockSize);
-            powerPellets_.push_back(powerPellet__);
+            auto powerPellet_ = make_shared<PowerPellet>(blockSize,blockSize,sf::Color::White);
+            powerPellet_->setPosition(x*blockSize, y*blockSize);
+            powerPellets_.push_back(powerPellet_);
         }
         break;
     case 'e' :
         {
-            auto enemy__= make_shared<Enemy>(blockSize,blockSize,sf::Color::Red);
-            enemy__->setPosition(x*blockSize, y*blockSize);
-            enemies_.push_back(enemy__);
+            auto enemy_= make_shared<Enemy>(blockSize,blockSize,sf::Color::Red);
+            enemy_->setPosition(x*blockSize, y*blockSize);
+            enemies_.push_back(enemy_);
         }
         break;
     case 'p' :
         {
-            auto player__= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
-            player__->setPosition(x*blockSize, y*blockSize);
+            player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
+            player_->setPosition(x*blockSize, y*blockSize);
         }
         break;
    }
 }
+
+shared_ptr<Player> Maze::getPlayer()
+{
+    return player_;
+}
+
+vector<shared_ptr<Enemy>> Maze::getEnemies()
+{
+    return enemies_;
+}
+
+vector<shared_ptr<Key>> Maze::getKeys()
+{
+    return keys_;
+}
+
+vector<shared_ptr<Door>> Maze::getDoors()
+{
+    return doors_;
+}
+
+vector<shared_ptr<Wall>> Maze::getWalls()
+{
+    return walls_;
+}
+
+vector<shared_ptr<Fruit>> Maze::getFruits()
+{
+    return fruits_;
+}
+
+vector<shared_ptr<PowerPellet>> Maze::getPowerPellets()
+{
+    return powerPellets_;
+}
+
+vector<vector<shared_ptr<Entity>>> Maze::getMaze()
+{
+    return maze_;
+}
+
+vector<vector<char>> Maze:: getCharMaze()
+{
+    return char_;
+}
+
+int Maze::getMaxFruits()
+{
+    return maxFruits;
+}
+
 
 void Maze::setUp()
 {
@@ -148,12 +184,11 @@ void Maze::setUp()
             if(char_[i][j] == 'w')
             {
                 auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
-                //walls_.push_back(wall_);
                 maze_[i].push_back(wall_);
             }
             else if(char_[i][j] == 'p')
             {
-                player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
+                //player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
                 maze_[i].push_back(player_);
             }
             else if(char_[i][j] == 'e')

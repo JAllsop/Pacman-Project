@@ -6,6 +6,8 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
     maze_ = make_shared<Maze>(window);
     mChar_ = maze_->getCharMaze();
     m_= maze_-> getMaze();
+    //auto test = maze_->getPlayer();
+    //cout << test->getY() << "\n";
     // Time var
     milli1 = sf::milliseconds(110);
     milli2 = sf::milliseconds(100);
@@ -18,7 +20,7 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
     powerPellet = 0;
     // Directions, not used yet
     isPlayerDead = false;
-    isAllFruitsEaten=false;
+    isAllFruitsEaten = false;
     //Gets positional info from mazes
     setUpPlayer();
     setUpEnemy();
@@ -57,7 +59,7 @@ void MazeHandler::run()
 
     if(fruits == maze_->getMaxFruits())
     {
-        isPlayerDead=true;
+        isPlayerDead = true;
     }
 
     render();
@@ -102,13 +104,15 @@ void MazeHandler::setUpEnemy()
 
 void MazeHandler::updateAI()
 {
+    //enumerate direction
     bool hasMoved = false;
     srand(time(0));
+    auto enemies = maze_->getEnemies();
     if(random == 0)
     {
         random = (rand()%4)+1;
     }
-    for(int i = 0; i < MAX_MAZE_X; i++)
+    /*for(int i = 0; i < MAX_MAZE_X; i++)
     {
         for(int j = 0; j < MAX_MAZE_Y; j++)
         {
@@ -223,7 +227,113 @@ void MazeHandler::updateAI()
         {
             break;
         }
+    }*/
+    for (auto i = enemies.begin(); i != enemies.end(); ++i)
+    {
+        while(hasMoved == false)
+        {
+            switch(random)
+            {
+            case '1' : //Up
+                {
+                    *i->moveUp();
+                    hasMoved = true;
+                    auto test = enemyCollision(*i);
+                    if(test != *i)
+                    {
+                        if(typeid(test) == typeid(Player))
+                        {
+                            //super pellet check
+                        }
+                        else //hitting wall
+                        {
+                            hasMoved = false;
+                            random = (rand()%4)+1;
+                            *i->moveDown();
+                        }
+                    }
+                }
+                break;
+            case '2' :  //Down
+                {
+                    *i->moveDown();
+                    hasMoved = true;
+                    auto test = enemyCollision(*i);
+                    if(test != *i)
+                    {
+                        if(test == maze_->getPlayer())
+                        {
+                            //super pellet check
+                        }
+                        else //hitting wall
+                        {
+                            hasMoved = false;
+                            random = (rand()%4)+1;
+                            *i->moveUp();
+                        }
+                    }
+                }
+                break;
+            case '3' : //Left
+                {
+                    *i->moveLeft();
+                    hasMoved = true;
+                    auto test = enemyCollision(*i);
+                    if(test != *i)
+                    {
+                        if(test == maze_->getPlayer())
+                        {
+                            //super pellet check
+                        }
+                        else //hitting wall
+                        {
+                            hasMoved = false;
+                            random = (rand()%4)+1;
+                            *i->moveRight();
+                        }
+                    }
+                }
+                break;
+            case '4' : //Right
+                {
+                    *i->moveRight();
+                    auto test = enemyCollision(*i);
+                    if(test != *i)
+                    {
+                        if(test == maze_->getPlayer())
+                        {
+                            //super pellet check
+                        }
+                        else //hitting wall
+                        {
+                            hasMoved = false;
+                            random = (rand()%4)+1;
+                            *i->moveLeft();
+                        }
+                    }
+                }
+                break;
+            }
+        }
     }
+}
+
+shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy)
+{
+    auto testEntities = maze_->getWalls();
+    auto player = maze_->getPlayer();
+    if (enemy->getSprite().getGlobalBounds().intersects(*player->getSprite().getGlobalBounds()))
+    {
+        return player;
+    }
+    for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntities)
+    {
+        if(enemy->getSprite().getGlobalBounds().intersects(*testEntity->getSprite().getGlobalBounds()))
+            {
+                return *testEntity;
+            }
+    }
+    return enemy;
 }
 
 void MazeHandler::updatePlayer()

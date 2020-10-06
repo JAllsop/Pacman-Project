@@ -23,10 +23,13 @@ public:
     shared_ptr<Maze> getMaze();
     int getEnemyInitialX();
     int getEnemyInitialY();
+    shared_ptr<Entity> enemyCollision(Enemy enemy);
 
 protected:
 
 private:
+    enum class Type{ Player, Enemy, Wall, Fruit, Door, Key, PowerPellet};
+
     shared_ptr<Maze> maze_;
     //Containers
     vector<vector<shared_ptr<Entity>>> m_;

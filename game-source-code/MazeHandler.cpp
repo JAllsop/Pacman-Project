@@ -102,7 +102,7 @@ void MazeHandler::setUpEnemy()
     ePosY = m_[enemyX][enemyY]->getY();
 }
 */
-void MazeHandler::updateAI()
+void MazeHandler::updateAI() //move to EnemyHandler
 {
     //enumerate direction?
     auto hasMoved = false;
@@ -318,7 +318,7 @@ void MazeHandler::updateAI()
     }
 }
 
-shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy)
+shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move to EnemyHandler
 {
     auto testEntities = maze_->getWalls();
     auto player = maze_->getPlayer();
@@ -336,7 +336,7 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy)
     return enemy;
 }
 
-shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities)
+shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities) //move to PlayerHandley (& Player Handler??)
 {
     for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntities)
     {
@@ -348,7 +348,7 @@ shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vecto
     return movingEntity;
 }
 
-shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> Player)
+shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> Player) //move to PlayerHandler
 {
     collideEntity = collision(player, maze_getWall());
     if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
@@ -366,7 +366,7 @@ shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> Player)
     if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
 }
 
-bool MazeHandler::resolveCollision(shared_ptr<Player> player)
+bool MazeHandler::resolveCollision(shared_ptr<Player> player)//player required for future developemnt e.g. multiplayer
 {
     bool reverseMovement;
     auto collideEntity = playerCollision();

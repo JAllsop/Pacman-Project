@@ -20,15 +20,15 @@ public:
     bool getPlayerState();
     bool allFruitsEaten();
 
-    void render();// This is part of the display PS: change later
+    void render();// This is part of the display (move to presentation layer)
 
-    //enemy movement with Collision
+    //enemy movement with Collision (move to handler)
     bool enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i);
     bool enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i);
     bool enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i);
     bool enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i);
 
-    //player movement with Collision
+    //player movement with Collision (move to handler)
     void playerMoveDown();
     void playerMoveUp();
     void playerMoveRight();
@@ -39,16 +39,21 @@ public:
 protected:
 
 private:
-    //player collision check
+    //player collision check (move to handler)
     shared_ptr<Entity> playerCollision();
     bool resolveCollision();
-    //enemy collision check
+
+    //enemy collision check (move to handler)
     shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
 
     shared_ptr<sf::RenderWindow> window_;
 
     shared_ptr<Maze> maze_;
 
+    //handlers
+    shared_ptr<PlayerHandler> playerHandler_;
+
+    //just needed for handlers???
     vector<shared_ptr<Wall>> walls_;
     vector<shared_ptr<Key>> keys_;
     vector<shared_ptr<Door>> doors_;

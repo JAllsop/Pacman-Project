@@ -3,7 +3,8 @@
 MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}, random{0}, keys{0}, fruits{0}, powerPellets{0}
 {
     // Objects
-    maze_ = make_shared<Maze>(window);
+    maze_ = make_shared<Maze>(window_);
+    playerHandler_ = make_shared<PlayerHandler>(window_, maze_);
 
     loadLevel();
 
@@ -24,7 +25,7 @@ MazeHandler::~MazeHandler()
 {
     //dtor
 }
-
+//just needed for handlers???
 void MazeHandler::loadLevel()
 {
     enemies_ = maze_->getEnemies();
@@ -52,16 +53,14 @@ void MazeHandler::run()
     }
     if(playerClock.getElapsedTime() >= playerSpeed)
     {
-        updatePlayer();
-        //playerMoveDown();
-        //playerMoveUp();
-        //playerHandler_->run();
+        //updatePlayer();
+        playerHandler_->update();
         playerClock.restart();
     }
     if(powerPellets > 0)
     {
         if(powerPelletClock.getElapsedTime() >= powerPelletTime){
-            powerPellets = 0;
+            powerPellets--;
             powerPelletClock.restart();
         }
     }else{powerPelletClock.restart();}

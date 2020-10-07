@@ -1,6 +1,6 @@
 #include "MazeHandler.h"
 
-MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
+MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}, random{0}, keys{0}, fruits{0}, powerPellets{0}
 {
     // Objects
     maze_ = make_shared<Maze>(window);
@@ -12,12 +12,6 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
     milli1 = sf::milliseconds(110);
     milli2 = sf::milliseconds(100);
     milli3 = sf::milliseconds(5000);
-    //Var init
-    random = 0;
-    // Counters
-    keys = 0;
-    fruits = 0;
-    powerPellet = 0;
     // Directions, not used yet
     isPlayerDead = false;
     isAllFruitsEaten = false;
@@ -50,10 +44,10 @@ void MazeHandler::run()
         //playerHandler_->run();
         clock2.restart();
     }
-    if(powerPellet > 0)
+    if(powerPellets > 0)
     {
         if(elapsed3 >= milli3){
-            powerPellet = 0;
+            powerPellets = 0;
             clock3.restart();
         }
     }else{clock3.restart();}
@@ -335,9 +329,11 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move t
     }
     return enemy;
 }
-
+//cannot pass superclass vector of pointers to base class class vector of pointers
+/*
 shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, const string type) //move to PlayerHandley (& Player Handler??)
 {
+    auto testEntities = maze_->getWalls();
     for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntity)
     {
         if(movingEntity->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
@@ -347,10 +343,54 @@ shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, const
     }
     return movingEntity;
 }
-
+*/
 shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> player) //move to PlayerHandler
 {
-    auto collideEntity = collision(player, typeid(Wall).name());
+    auto testWalls = maze_->getWalls();
+    for(auto testEntity = testWalls.begin(); testEntity != testWalls.end(); ++testEntity)
+    {
+        if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
+
+    auto testFruits = maze_->getFruits();
+    for(auto testEntity = testFruits.begin(); testEntity != testFruits.end(); ++testEntity)
+    {
+        if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
+    auto testKeys = maze_->getKeys();
+    for(auto testEntity = testKeys.begin(); testEntity != testKeys.end(); ++testEntity)
+    {
+        if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
+    auto testDoors = maze_->getDoors();
+    for(auto testEntity = testDoors.begin(); testEntity != testDoors.end(); ++testEntity)
+    {
+        if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
+    auto testPowerPellets = maze_->getPowerPellets();
+    for(auto testEntity = testPowerPellets.begin(); testEntity != testPowerPellets.end(); ++testEntity)
+    {
+        if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
+    return player;
+    //cannot pass superclass vector of pointers to base class class vector of pointers
+    /*
+    auto collideEntity = collision(player, maze->getWalls());
     if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
 
     collideEntity = collision(player, maze_->getFruit());
@@ -364,12 +404,13 @@ shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> player) //mov
 
     collideEntity = collision(player, maze_->getPowerPellets());
     if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
+    */
 }
 //move to PlayerHandler
 bool MazeHandler::resolveCollision(shared_ptr<Player> player)//player required for future developemnt e.g. multiplayer
 {
     bool reverseMovement = false; //change initiliasation
-    auto collideEntity = playerCollision();
+    auto collideEntity = playerCollision(player);
     if(typeid(collideEntity) != typeid(player))
     {
         if(typeid(collideEntity) == typeid(Wall))
@@ -378,9 +419,9 @@ bool MazeHandler::resolveCollision(shared_ptr<Player> player)//player required f
         }
         else if(typeid(collideEntity) == typeid(Fruit))
         {
-            auto it = find(maze_->getFruit().begin(), maze_->getFruit().end(), collideEntity);
-            auto index = maze_->getFruit().begin() + distance(maze_->getFruit().begin(), it);
-            maze_->getFruit().erase(index);
+            auto it = find(maze_->getFruits().begin(), maze_->getFruits().end(), collideEntity);
+            auto index = maze_->getFruits().begin() + distance(maze_->getFruits().begin(), it);
+            maze_->getFruits().erase(index);
 
             fruits++;
         }
@@ -410,16 +451,16 @@ bool MazeHandler::resolveCollision(shared_ptr<Player> player)//player required f
         else if(typeid(collideEntity) == typeid(PowerPellet))
         {
             auto it = find(maze_->getPowerPellets().begin(), maze_->getPowerPellets().end(), collideEntity);
-            auto index = maze_->getKeys().begin() + distance(maze_->getPowerPellets().begin(), it);
+            auto index = maze_->getPowerPellets().begin() + distance(maze_->getPowerPellets().begin(), it);
             maze_->getPowerPellets().erase(index);
 
             powerPellets++;
         }
         else if(typeid(collideEntity) == typeid(Enemy))
         {
-            if(powerPellet > 0)
+            if(powerPellets > 0)
             {
-                collideEntity->setPosition(ePosX,ePosY);
+                collideEntity->setPosition(collideEntity->getInitialX(),collideEntity->getInitialY());
             }
             else
             {
@@ -434,7 +475,7 @@ void MazeHandler::playerMoveDown()
 {
     auto player = maze_->getPlayer();
     player->moveDown();
-    auto reverseMovement = resolveCollision(shared_ptr<Player> player);
+    auto reverseMovement = resolveCollision(player);
     if(reverseMovement){player->moveUp();}
 }
 //move to PlayerHandler
@@ -442,7 +483,7 @@ void MazeHandler::playerMoveUp()
 {
     auto player = maze_->getPlayer();
     player->moveUp();
-    auto reverseMovement = resolveCollision(shared_ptr<Player> player);
+    auto reverseMovement = resolveCollision(player);
     if(reverseMovement){player->moveDown();}
 }
 //move to PlayerHandler
@@ -450,7 +491,7 @@ void MazeHandler::playerMoveLeft()
 {
     auto player = maze_->getPlayer();
     player->moveLeft();
-    auto reverseMovement = resolveCollision(shared_ptr<Player> player);
+    auto reverseMovement = resolveCollision(player);
     if(reverseMovement){player->moveRight();}
 }
 //move to PlayerHandler
@@ -458,7 +499,7 @@ void MazeHandler::playerMoveRight()
 {
     auto player = maze_->getPlayer();
     player->moveRight();
-    auto reverseMovement = resolveCollision(shared_ptr<Player> player);
+    auto reverseMovement = resolveCollision(player);
     if(reverseMovement){player->moveLeft();}
 }
 //move to PlayerHandler
@@ -797,23 +838,30 @@ void MazeHandler::updatePlayer()
     }
 }
 
-void MazeHandler::draw(vector<shared_ptr<Entity>> entities)
-{
-    for(auto i = entities.begin(); i != entities.end(); ++i)
-    {
-        window_->draw(*((*i)->getEntity()));
-    }
-}
-
 void MazeHandler::render()
 {
     window_->clear();
-    draw(maze_->getWalls());
-    draw(maze_->getKeyss());
-    draw(maze_->getDoors());
-    draw(maze_->getKeys());
-    draw(maze_->getEnemies());
-    window_->maze_->getPlayer()->getEntity();
+    //walls
+    for(auto i = maze_->getWalls().begin(); i != maze_->getWalls().end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //keys
+    for(auto i = maze_->getKeys().begin(); i != maze_->getKeys().end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //doors
+    for(auto i = maze_->getDoors().begin(); i != maze_->getDoors().end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //Enemies
+    for(auto i = maze_->getEnemies().begin(); i != maze_->getEnemies().end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    window_->draw(*(maze_->getPlayer()->getEntity()));
     /*
     for(int i = 0; i < MAX_MAZE_X; i++)
     {
@@ -854,29 +902,3 @@ bool MazeHandler::allFruitsEaten()
 {
     return isAllFruitsEaten;
 }
-
-vector<vector<shared_ptr<Entity>>> MazeHandler::getEntities()
-{
-    return m_;
-}
-
-vector<vector<char>> MazeHandler::getCharMaze()
-{
-    return mChar_;
-}
-
-shared_ptr<Maze> MazeHandler::getMaze()
-{
-    return maze_;
-}
-
-/*
-int MazeHandler::getEnemyInitialX()
-{
-    return eEntityX;
-}
-int MazeHandler::getEnemyInitialY()
-{
-    return eEntityY;
-}
-*/

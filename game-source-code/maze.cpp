@@ -2,12 +2,14 @@
 
 Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resources/maze.txt"}
 {
-    //startXPos = 50;// control maze top left location X
-    //startYPos = 50;// control maze top left location Y
+    /*
+    startXPos = 50;// control maze top left location X
+    startYPos = 50;// control maze top left location Y
 
-    // all entities have the same dimension, this makes it easier to work with
-    //entityWidth_ = 40.0;
-    //entityHeight_ = 40.0;
+    //all entities have the same dimension, this makes it easier to work with
+    entityWidth_ = 40.0;
+    entityHeight_ = 40.0;
+    */
     maxFruits = 0;
     // Make sure containers are empty
     char_.clear();
@@ -24,8 +26,8 @@ Maze::~Maze()
 void Maze::init()
 {
     read();
-    setUp();
-    update();
+    //setUp();
+    //update();
 }
 
 void Maze::read()
@@ -112,7 +114,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         break;
     case 'e' :
         {
-            auto enemy_= make_shared<Enemy>(blockSize,blockSize,sf::Color::Red);
+            auto enemy_= make_shared<Enemy>(blockSize,blockSize, sf::Color::Red);
             enemy_->setPosition(x*blockSize, y*blockSize);
             enemies_.push_back(enemy_);
         }

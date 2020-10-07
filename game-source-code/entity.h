@@ -34,11 +34,14 @@ public:
     float getY();
     shared_ptr<sf::RectangleShape> getEntity();
 
+    float getInitialX();
+    float getInitialY();
+
     // The entity boundaries
-    virtual float getTop();
-    virtual float getBottom();
-    virtual float getLeft();
-    virtual float getRight();
+    float getTop();
+    float getBottom();
+    float getLeft();
+    float getRight();
 
     /*
     // Entity dimensions
@@ -59,6 +62,8 @@ protected:
     shared_ptr<sf::RectangleShape> entity_;
     float height_;
     float width_;
+    float initialX;
+    float initialY;
 
 private:
     //float isAlive_;

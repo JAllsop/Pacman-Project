@@ -69,7 +69,6 @@ void Game::updateStates()
     {
         stateContainer_.push(endState_);
     }
-    // Still need to add the end game state
 }
 
 void Game::runState()

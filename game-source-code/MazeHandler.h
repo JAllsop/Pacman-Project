@@ -18,9 +18,9 @@ public:
     bool allFruitsEaten();
 
     void render();// This is part of the display PS: change later
-    void draw();
 
-    shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, const string type);
+    //shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities);
+    //cannot pass superclass vector of pointers to base class class vector of pointers
     shared_ptr<Entity> playerCollision(shared_ptr<Player> player);
     shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
     bool resolveCollision(shared_ptr<Player> Player);
@@ -52,7 +52,7 @@ private:
     //Handlers
     shared_ptr<PlayerHandler> playerHandler_;
     shared_ptr<EnemyHandler> enemyHandler_;
-    /*
+
     //Window
     //Keeps track of char vector
     //int playerX;
@@ -75,7 +75,7 @@ private:
     //counters
     int keys;
     int fruits;
-    int powerPellet;
+    int powerPellets;
     //SfML
     sf::Time milli1;
     sf::Time milli2;

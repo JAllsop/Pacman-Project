@@ -4,28 +4,25 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
 {
     // Objects
     maze_ = make_shared<Maze>(window);
+
     enemies_ = maze_->getEnemies();
     player_ = maze_->getPlayer();
-    //auto drawEntity = player_->getEntity();
-    //cout << player_->getX() << "\n";
     walls_ = maze_->getWalls();
     keys_ = maze_->getKeys();
     fruits_ = maze_->getFruits();
     powerPellets_ = maze_->getPowerPellets();
     doors_ = maze_->getDoors();
-    //maze_->init();
+
     // Time var
-    milli1 = sf::milliseconds(110);
-    milli2 = sf::milliseconds(100);
-    milli3 = sf::milliseconds(5000);
+    enemySpeed = sf::milliseconds(200);
+    playerSpeed = sf::milliseconds(100);
+    powerPelletTime = sf::milliseconds(5000);
+
     // Directions, not used yet
     isPlayerDead = false;
     isAllFruitsEaten = false;
-    //window_->clear();
-    //window_->display();
 
-    //window_->draw(drawEntity);
-    //window_->display();
+    srand(time(0));
 }
 
 MazeHandler::~MazeHandler()
@@ -35,30 +32,25 @@ MazeHandler::~MazeHandler()
 
 void MazeHandler::run()
 {
-    render();
-
-    elapsed1 = clock1.getElapsedTime();
-    elapsed2 = clock2.getElapsedTime();
-    elapsed3 = clock3.getElapsedTime();
-    if(elapsed1 >= milli1)
+    if(enemyClock.getElapsedTime() >= enemySpeed)
     {
         updateAI();
         //enemyHandler_->run();
-        clock1.restart();
+        enemyClock.restart();
     }/*
-    if(elapsed2 >= milli2)
+    if(playerClock.getElapsedTime() >= playerSpeed)
     {
         updatePlayer();
         //playerHandler_->run();
-        clock2.restart();
+        playerClock.restart();
     }
-    if(powerPellets > 0)
+    if(powerPellet > 0)
     {
-        if(elapsed3 >= milli3){
+        if(PowerPelletClock.getElapsedTime() >= PowerPelletTime){
             powerPellets = 0;
-            clock3.restart();
+            PowerPelletClock.restart();
         }
-    }else{clock3.restart();}
+    }else{PowerPelletClock.restart();}
 
     if(fruits == maze_->getMaxFruits())
     {
@@ -71,16 +63,12 @@ void MazeHandler::updateAI() //move to EnemyHandler
 {
     //enumerate direction?
     auto hasMoved = false;
-    srand(time(0));
     //auto enemies = maze_->getEnemies();
-    if(random == 0)
-    {
-        random = (rand()%4)+1;
-    }
     for (auto i = enemies_.begin(); i != enemies_.end(); ++i)
     {
         while(hasMoved == false)
         {
+            random = (rand()%4)+1;
             switch(random)
             {//better seperation (especially for testing) if indivual function for each movement
             case 1 : //Up
@@ -97,7 +85,6 @@ void MazeHandler::updateAI() //move to EnemyHandler
                         else //hitting wall
                         {
                             hasMoved = false;
-                            random = (rand()%4)+1;
                             (*i)->moveDown();
                         }
                     }
@@ -117,7 +104,6 @@ void MazeHandler::updateAI() //move to EnemyHandler
                         else //hitting wall
                         {
                             hasMoved = false;
-                            random = (rand()%4)+1;
                             (*i)->moveUp();
                         }
                     }
@@ -137,7 +123,6 @@ void MazeHandler::updateAI() //move to EnemyHandler
                         else //hitting wall
                         {
                             hasMoved = false;
-                            random = (rand()%4)+1;
                             (*i)->moveRight();
                         }
                     }
@@ -156,7 +141,6 @@ void MazeHandler::updateAI() //move to EnemyHandler
                         else //hitting wall
                         {
                             hasMoved = false;
-                            random = (rand()%4)+1;
                             (*i)->moveLeft();
                         }
                     }
@@ -174,6 +158,13 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move t
         return player_;
     }
     for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
+    {
+        if(enemy->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return *testEntity;
+            }
+    }
+    for(auto testEntity = doors_.begin(); testEntity != doors_.end(); ++testEntity)
     {
         if(enemy->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {

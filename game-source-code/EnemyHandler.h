@@ -40,6 +40,7 @@ class EnemyHandler
     float ePosY;
     // Random rumber gen
     int random;
+
     int powerPellet;
     bool isPlayerDead;
 };

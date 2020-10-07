@@ -55,16 +55,17 @@ private:
     int fruits;
     int powerPellets;
     //SfML
-    sf::Time milli1;
-    sf::Time milli2;
-    sf::Time milli3;
-    sf::Clock clock1;
-    sf::Clock clock2;
-    sf::Clock clock3;
+    sf::Time enemySpeed;
+    sf::Time playerSpeed;
+    sf::Time powerPelletTime;
+    sf::Clock enemyClock;
+    sf::Clock playerClock;
+    sf::Clock powerPelletClock;
+    /*
     sf::Time elapsed1;
     sf::Time elapsed2;
     sf::Time elapsed3;
-
+    */
 
 };
 

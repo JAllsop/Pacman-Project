@@ -840,7 +840,7 @@ void MazeHandler::updatePlayer()
 
 void MazeHandler::render()
 {
-    window_->clear();
+    window_->clear();/*
     //walls
     for(auto i = maze_->getWalls().begin(); i != maze_->getWalls().end(); ++i)
     {
@@ -862,35 +862,8 @@ void MazeHandler::render()
         window_->draw(*((*i)->getEntity()));
     }
     window_->draw(*(maze_->getPlayer()->getEntity()));
-    /*
-    for(int i = 0; i < MAX_MAZE_X; i++)
-    {
-        for(int j = 0; j < MAX_MAZE_Y; j++)
-        {
-            if(typeid(Wall) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-            if(typeid(Fruit) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-            if(typeid(Key) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-            if(typeid(Door) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-            if(typeid(PowerPellet) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-        }
-    }
-    for(int i = 0; i < MAX_MAZE_X; i++)
-    {
-        for(int j = 0; j < MAX_MAZE_Y; j++)
-        {
-            if(typeid(Player) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-            if(typeid(Enemy) == typeid(*m_[i][j]))
-                window_->draw(*(m_[i][j]->getEntity()));
-        }
-    }
-    */
     window_->display();
+    */
 }
 
 bool MazeHandler::getPlayerState()

@@ -21,9 +21,6 @@ public:
 
     //shared_ptr<Entity> collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>> testEntities);
     //cannot pass superclass vector of pointers to base class class vector of pointers
-    shared_ptr<Entity> playerCollision(shared_ptr<Player> player);
-    shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
-    bool resolveCollision(shared_ptr<Player> Player);
 
     void playerMoveDown();
     void playerMoveUp();
@@ -35,6 +32,11 @@ public:
 protected:
 
 private:
+
+    shared_ptr<Entity> playerCollision();
+    shared_ptr<Entity> enemyCollision(shared_ptr<Enemy> enemy);
+    bool resolveCollision();
+
     shared_ptr<sf::RenderWindow> window_;
 
     shared_ptr<Maze> maze_;

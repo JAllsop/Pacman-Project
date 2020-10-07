@@ -5,7 +5,7 @@ Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resou
 
     // Make sure containers are empty
 
-    //init();
+    init();
 }
 
 Maze::~Maze()

@@ -4,7 +4,16 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
 {
     // Objects
     maze_ = make_shared<Maze>(window);
-    maze_->init();
+    enemies_ = maze_->getEnemies();
+    player_ = maze_->getPlayer();
+    //auto drawEntity = player_->getEntity();
+    //cout << player_->getX() << "\n";
+    walls_ = maze_->getWalls();
+    keys_ = maze_->getKeys();
+    fruits_ = maze_->getFruits();
+    powerPellets_ = maze_->getPowerPellets();
+    doors_ = maze_->getDoors();
+    //maze_->init();
     // Time var
     milli1 = sf::milliseconds(110);
     milli2 = sf::milliseconds(100);
@@ -12,6 +21,11 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
     // Directions, not used yet
     isPlayerDead = false;
     isAllFruitsEaten = false;
+    //window_->clear();
+    //window_->display();
+
+    //window_->draw(drawEntity);
+    //window_->display();
 }
 
 MazeHandler::~MazeHandler()
@@ -367,10 +381,12 @@ void MazeHandler::updatePlayer()
 void MazeHandler::render()
 {
     window_->clear();
+    window_->display();
     //walls
-    for(auto i = maze_->getWalls().begin(); i != maze_->getWalls().end(); ++i)
+    for(auto i = walls_.begin(); i != walls_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        auto drawEntity = (*i)->getEntity();
+        window_->draw(*drawEntity);
     }
     //keys
     for(auto i = maze_->getKeys().begin(); i != maze_->getKeys().end(); ++i)

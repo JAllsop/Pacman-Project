@@ -35,8 +35,16 @@ public:
 protected:
 
 private:
+    shared_ptr<sf::RenderWindow> window_;
 
     shared_ptr<Maze> maze_;
+    vector<shared_ptr<Wall>> walls_;
+    vector<shared_ptr<Key>> keys_;
+    vector<shared_ptr<Door>> doors_;
+    vector<shared_ptr<PowerPellet>> powerPellets_;
+    vector<shared_ptr<Fruit>> fruits_;
+    vector<shared_ptr<Enemy>> enemies_;
+    shared_ptr<Player> player_;
     // Random rumber gen
     int random;
     //Direction indicators
@@ -57,7 +65,7 @@ private:
     sf::Time elapsed2;
     sf::Time elapsed3;
 
-    shared_ptr<sf::RenderWindow> window_;
+
 };
 
 #endif // MAZEHANDLER_H

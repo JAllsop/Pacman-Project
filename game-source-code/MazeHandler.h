@@ -23,10 +23,10 @@ public:
     void render();// This is part of the display PS: change later
 
     //enemy movement with Collision
-    void enemyMoveDown();
-    void enemyMoveUp();
-    void enemyMoveRight();
-    void enemyMoveLeft();
+    bool enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i);
+    bool enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i);
+    bool enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i);
+    bool enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i);
 
     //player movement with Collision
     void playerMoveDown();

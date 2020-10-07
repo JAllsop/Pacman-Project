@@ -464,7 +464,7 @@ void MazeHandler::playerMoveRight()
 //move to PlayerHandler
 void MazeHandler::updatePlayer()
 {
-
+/*
     for(int i = 0; i < MAX_MAZE_X; i++)
     {
         for(int j = 0; j < MAX_MAZE_Y; j++)

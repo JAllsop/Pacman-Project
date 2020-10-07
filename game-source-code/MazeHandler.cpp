@@ -5,13 +5,7 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
     // Objects
     maze_ = make_shared<Maze>(window);
 
-    enemies_ = maze_->getEnemies();
-    player_ = maze_->getPlayer();
-    walls_ = maze_->getWalls();
-    keys_ = maze_->getKeys();
-    fruits_ = maze_->getFruits();
-    powerPellets_ = maze_->getPowerPellets();
-    doors_ = maze_->getDoors();
+    loadLevel();
 
     // Time var
     enemySpeed = sf::milliseconds(350);
@@ -28,6 +22,17 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
 MazeHandler::~MazeHandler()
 {
     //dtor
+}
+
+void MazeHandler::loadLevel()
+{
+    enemies_ = maze_->getEnemies();
+    player_ = maze_->getPlayer();
+    walls_ = maze_->getWalls();
+    keys_ = maze_->getKeys();
+    fruits_ = maze_->getFruits();
+    powerPellets_ = maze_->getPowerPellets();
+    doors_ = maze_->getDoors();
 }
 
 void MazeHandler::run()

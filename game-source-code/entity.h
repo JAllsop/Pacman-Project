@@ -43,21 +43,6 @@ public:
     float getLeft();
     float getRight();
 
-    /*
-    // Entity dimensions
-    virtual float getWidth();
-    virtual float getHeight();
-    virtual shared_ptr<sf::RectangleShape> getEntity();
-    */
-    /* Entity movements
-    virtual void moveUp()= 0;
-    virtual void moveDown()= 0;
-    virtual void moveLeft()= 0;
-    virtual void moveRight()= 0;
-    */
-    // bools
-    //bool isAlive();
-
 protected:
     shared_ptr<sf::RectangleShape> entity_;
     float height_;
@@ -66,7 +51,6 @@ protected:
     float initialY;
 
 private:
-    //float isAlive_;
 };
 
 #endif // ENTITY_H

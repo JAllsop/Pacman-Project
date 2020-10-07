@@ -12,6 +12,8 @@ public:
     virtual ~MazeHandler();
     void run();
 
+    void loadLevel(); //changing level possible
+
     void updatePlayer();
     void updateAI();
 

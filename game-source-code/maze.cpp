@@ -31,10 +31,10 @@ void Maze::read()
         {
             for(auto i = 0; i != line.size(); ++i)
             {
-                cout << line.at(i);
+                //cout << line.at(i);
                 loadEntity(line.at(i), i, lineNum);
             }
-            cout << "\n";
+            //cout << "\n";
             lineNum++;
         }
     }

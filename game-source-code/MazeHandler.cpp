@@ -45,19 +45,19 @@ void MazeHandler::run()
         //playerMoveUp();
         //playerHandler_->run();
         playerClock.restart();
-    }/*
-    if(powerPellet > 0)
+    }
+    if(powerPellets > 0)
     {
-        if(PowerPelletClock.getElapsedTime() >= PowerPelletTime){
+        if(powerPelletClock.getElapsedTime() >= powerPelletTime){
             powerPellets = 0;
-            PowerPelletClock.restart();
+            powerPelletClock.restart();
         }
-    }else{PowerPelletClock.restart();}
+    }else{powerPelletClock.restart();}
 
     if(fruits == maze_->getMaxFruits())
     {
         isPlayerDead = true;
-    }*/
+    }
     render();
 }
 
@@ -175,22 +175,6 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move t
     return enemy;
 }
 
-//cannot pass superclass vector of pointers to base class class vector of pointers
-/*
-shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>) //move to PlayerHandley (& Player Handler??)
-{
-    auto testEntities = maze_->getWalls();
-    for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntity)
-    {
-        if(movingEntity->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return *testEntity;
-            }
-    }
-    return movingEntity;
-}
-*/
-
 shared_ptr<Entity> MazeHandler::playerCollision() //move to PlayerHandler
 {
     for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
@@ -229,24 +213,8 @@ shared_ptr<Entity> MazeHandler::playerCollision() //move to PlayerHandler
             }
     }
     return player_;
-    //cannot pass superclass vector of pointers to base class class vector of pointers
-    /*
-    auto collideEntity = collision(player, maze->getWalls());
-    if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
-
-    collideEntity = collision(player, maze_->getFruit());
-    if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
-
-    collideEntity = collision(player, maze_->getKeys());
-    if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
-
-    collideEntity = collision(player, maze_->getDoors());
-    if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
-
-    collideEntity = collision(player, maze_->getPowerPellets());
-    if(typeid(collideEntity) != typeid(Player)){return collideEntity;}
-    */
 }
+
 //move to PlayerHandler
 bool MazeHandler::resolveCollision()
 {
@@ -294,7 +262,7 @@ bool MazeHandler::resolveCollision()
             auto it = find(powerPellets_.begin(), powerPellets_.end(), collideEntity);
             auto index = powerPellets_.begin() + distance(powerPellets_.begin(), it);
             powerPellets_.erase(index);
-
+            //change ghost colour
             powerPellets++;
         }
         else if(typeid(collideEntity) == typeid(Enemy))
@@ -397,6 +365,11 @@ void MazeHandler::render()
     window_->draw(*(maze_->getPlayer()->getEntity()));
 
     window_->display();
+}
+
+shared_ptr<Maze> MazeHandler::getMaze()
+{
+    return maze_;
 }
 
 bool MazeHandler::getPlayerState()

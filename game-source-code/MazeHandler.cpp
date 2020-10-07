@@ -288,15 +288,15 @@ bool MazeHandler::resolveCollision()
             {
                 reverseMovement = true;
             }
-        }/*
-        else if(typeid(collideEntity*) == typeid(PowerPellet))
+        }
+        else if(typeid(*collideEntity) == typeid(PowerPellet))
         {
-            auto it = find(powerPellets_.begin(), maze_->powerPellets_.end(), collideEntity);
+            auto it = find(powerPellets_.begin(), powerPellets_.end(), collideEntity);
             auto index = powerPellets_.begin() + distance(powerPellets_.begin(), it);
             powerPellets_.erase(index);
 
             powerPellets++;
-        }*/
+        }
         else if(typeid(collideEntity) == typeid(Enemy))
         {
             if(powerPellets > 0)

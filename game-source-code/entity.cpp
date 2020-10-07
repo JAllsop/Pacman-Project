@@ -36,36 +36,6 @@ float Entity::getY()
     return entity_->getPosition().y;
 }
 
-float Entity::getTop()
-{
-    return getY();
-}
-
-float Entity::getBottom()
-{
-    return (getY() + height_);
-}
-
-float Entity::getLeft()
-{
-    return getX();
-}
-
-float Entity::getRight()
-{
-    return (getX() + width_);
-}
-/*
-float Entity::getWidth()
-{
-    return width_;
-}
-
-float Entity::getHeight()
-{
-    return height_;
-}
-*/
 shared_ptr<sf::RectangleShape> Entity::getEntity()
 {
     return entity_;
@@ -80,10 +50,3 @@ float Entity::getInitialY()
 {
     return initialY;
 }
-
-/*
-bool Entity::isAlive()
-{
-    return isAlive_;
-}
-*/

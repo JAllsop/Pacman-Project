@@ -14,7 +14,7 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
     doors_ = maze_->getDoors();
 
     // Time var
-    enemySpeed = sf::milliseconds(200);
+    enemySpeed = sf::milliseconds(350);
     playerSpeed = sf::milliseconds(100);
     powerPelletTime = sf::milliseconds(5000);
 
@@ -37,13 +37,14 @@ void MazeHandler::run()
         updateAI();
         //enemyHandler_->run();
         enemyClock.restart();
-    }/*
+    }
     if(playerClock.getElapsedTime() >= playerSpeed)
     {
         updatePlayer();
+        playerMoveDown();
         //playerHandler_->run();
         playerClock.restart();
-    }
+    }/*
     if(powerPellet > 0)
     {
         if(PowerPelletClock.getElapsedTime() >= PowerPelletTime){
@@ -66,6 +67,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
     //auto enemies = maze_->getEnemies();
     for (auto i = enemies_.begin(); i != enemies_.end(); ++i)
     {
+        //cout << (*i)->getX() << ";" << (*i)->getY() << "\n";
         while(hasMoved == false)
         {
             random = (rand()%4)+1;
@@ -192,41 +194,35 @@ shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vecto
 
 shared_ptr<Entity> MazeHandler::playerCollision(shared_ptr<Player> player) //move to PlayerHandler
 {
-    auto testWalls = maze_->getWalls();
-    for(auto testEntity = testWalls.begin(); testEntity != testWalls.end(); ++testEntity)
+    for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
     {
         if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
                 return (*testEntity);
             }
     }
-
-    auto testFruits = maze_->getFruits();
-    for(auto testEntity = testFruits.begin(); testEntity != testFruits.end(); ++testEntity)
+    for(auto testEntity = fruits_.begin(); testEntity != fruits_.end(); ++testEntity)
     {
         if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
                 return (*testEntity);
             }
     }
-    auto testKeys = maze_->getKeys();
-    for(auto testEntity = testKeys.begin(); testEntity != testKeys.end(); ++testEntity)
+    for(auto testEntity = keys_.begin(); testEntity != keys_.end(); ++testEntity)
     {
         if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
                 return (*testEntity);
             }
     }
-    auto testDoors = maze_->getDoors();
-    for(auto testEntity = testDoors.begin(); testEntity != testDoors.end(); ++testEntity)
+    for(auto testEntity = doors_.begin(); testEntity != doors_.end(); ++testEntity)
     {
         if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
                 return (*testEntity);
             }
     }
-    auto testPowerPellets = maze_->getPowerPellets();
-    for(auto testEntity = testPowerPellets.begin(); testEntity != testPowerPellets.end(); ++testEntity)
+    for(auto testEntity = powerPellets_.begin(); testEntity != powerPellets_.end(); ++testEntity)
     {
         if(player->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
@@ -319,34 +315,34 @@ bool MazeHandler::resolveCollision(shared_ptr<Player> player)//player required f
 //move to PlayerHandler
 void MazeHandler::playerMoveDown()
 {
-    auto player = maze_->getPlayer();
-    player->moveDown();
-    auto reverseMovement = resolveCollision(player);
-    if(reverseMovement){player->moveUp();}
+    player_->moveDown();
+    auto reverseMovement = resolveCollision();
+    cout <<reverseMovement << "\n";
+    if(reverseMovement){player_->moveUp();}
 }
 //move to PlayerHandler
 void MazeHandler::playerMoveUp()
 {
-    auto player = maze_->getPlayer();
-    player->moveUp();
-    auto reverseMovement = resolveCollision(player);
-    if(reverseMovement){player->moveDown();}
+    player_->moveUp();
+    auto reverseMovement = resolveCollision();
+    cout <<reverseMovement << "\n";
+    if(reverseMovement){player_->moveDown();}
 }
 //move to PlayerHandler
 void MazeHandler::playerMoveLeft()
 {
-    auto player = maze_->getPlayer();
-    player->moveLeft();
-    auto reverseMovement = resolveCollision(player);
-    if(reverseMovement){player->moveRight();}
+    player_->moveLeft();
+    auto reverseMovement = resolveCollision();
+    cout <<reverseMovement << "\n";
+    if(reverseMovement){player_->moveRight();}
 }
 //move to PlayerHandler
 void MazeHandler::playerMoveRight()
 {
-    auto player = maze_->getPlayer();
-    player->moveRight();
-    auto reverseMovement = resolveCollision(player);
-    if(reverseMovement){player->moveLeft();}
+    player_->moveRight();
+    auto reverseMovement = resolveCollision(player_);
+    cout <<reverseMovement << "\n";
+    if(reverseMovement){player_->moveLeft();}
 }
 //move to PlayerHandler
 void MazeHandler::updatePlayer()

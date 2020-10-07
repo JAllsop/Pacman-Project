@@ -23,7 +23,6 @@ public:
     void read();
     //getters
     int getMaxFruits();
-    // Returned
     shared_ptr<Player> getPlayer();
     vector<shared_ptr<Enemy>> getEnemies();
     vector<shared_ptr<Key>> getKeys();
@@ -33,10 +32,6 @@ public:
     vector<shared_ptr<PowerPellet>> getPowerPellets();
 
     void setLevel(string level_);
-    /*
-    vector<vector<shared_ptr<Entity>>> getMaze();
-    vector<vector<char>> getCharMaze();
-    */
 protected:
 
 private:
@@ -60,8 +55,6 @@ private:
     string level_;
 
     vector<vector<char>> char_;// holder for inputs
-    //float entityWidth_;
-    //float entityHeight_;
     float startXPos;
     float startYPos;
 
@@ -69,14 +62,6 @@ private:
     vector<vector<shared_ptr<Entity>>> maze_;// actually returned by the maze
     // Movable entities
     shared_ptr<Enemy> enemy_;
-    // Static entities
-    //shared_ptr<Wall> wall_;
-    //shared_ptr<Path> path_;
-    //shared_ptr<Key> key_;
-    //shared_ptr<Fruit> fruit_;
-    //shared_ptr<Door> door_;
-    //shared_ptr<PowerPellet> powerPellet_;
-    //Var
 };
 
 #endif // MAZE_H

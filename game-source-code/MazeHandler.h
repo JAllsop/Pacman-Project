@@ -32,41 +32,11 @@ public:
 
     shared_ptr<Maze> getMaze();
 
-
-    //void setUpPlayer();
-    //void setUpEnemy();
-    //vector<vector<shared_ptr<Entity>>> getEntities();
-    //vector<vector<char>> getCharMaze();
-    //int getEnemyInitialX();
-    //int getEnemyInitialY();
-
 protected:
 
 private:
 
     shared_ptr<Maze> maze_;
-    /*
-    //Containers
-    vector<vector<shared_ptr<Entity>>> m_;
-    vector<vector<char>> mChar_;
-    //Handlers
-    shared_ptr<PlayerHandler> playerHandler_;
-    shared_ptr<EnemyHandler> enemyHandler_;
-
-    //Window
-    //Keeps track of char vector
-    //int playerX;
-    //int playerY;
-    //int enemyX;
-    //int enemyY;
-    // Starting Co-ord of Moving Entities
-    int eEntityX;
-    int eEntityY;
-    int pEntityX;
-    int pEntityY;
-    float ePosX;
-    float ePosY;
-    */
     // Random rumber gen
     int random;
     //Direction indicators

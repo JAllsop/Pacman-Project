@@ -22,7 +22,7 @@ void Maze::read()
 {
     //error check needed
     ifstream fileReader(level_);
-    fileReader.open(level_);
+    //fileReader.open(level_);
     while(fileReader)
     {
         auto line = ""s;
@@ -48,14 +48,14 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
     case 'w' :
         {
             auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
-            wall_->setPosition(x*blockSize+50, y*blockSize+50);
+            wall_->setPosition(x*blockSize, y*blockSize);
             walls_.push_back(wall_);
         }
         break;
     case 'f' :
         {
             auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
-            fruit_->setPosition(x*blockSize+50, y*blockSize+50);
+            fruit_->setPosition(x*blockSize, y*blockSize);
             fruits_.push_back(fruit_);
             maxFruits++;
         }
@@ -63,7 +63,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
     case 'd' :
         {
             auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color(53,19,0));
-            door_->setPosition(x*blockSize+50, y*blockSize+50);
+            door_->setPosition(x*blockSize, y*blockSize);
             doors_.push_back(door_);
         }
         break;

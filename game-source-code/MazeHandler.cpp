@@ -35,6 +35,8 @@ MazeHandler::~MazeHandler()
 
 void MazeHandler::run()
 {
+    render();
+
     elapsed1 = clock1.getElapsedTime();
     elapsed2 = clock2.getElapsedTime();
     elapsed3 = clock3.getElapsedTime();
@@ -43,7 +45,7 @@ void MazeHandler::run()
         updateAI();
         //enemyHandler_->run();
         clock1.restart();
-    }
+    }/*
     if(elapsed2 >= milli2)
     {
         updatePlayer();
@@ -61,7 +63,7 @@ void MazeHandler::run()
     if(fruits == maze_->getMaxFruits())
     {
         isPlayerDead = true;
-    }
+    }*/
     render();
 }
 
@@ -70,12 +72,12 @@ void MazeHandler::updateAI() //move to EnemyHandler
     //enumerate direction?
     auto hasMoved = false;
     srand(time(0));
-    auto enemies = maze_->getEnemies();
+    //auto enemies = maze_->getEnemies();
     if(random == 0)
     {
         random = (rand()%4)+1;
     }
-    for (auto i = enemies.begin(); i != enemies.end(); ++i)
+    for (auto i = enemies_.begin(); i != enemies_.end(); ++i)
     {
         while(hasMoved == false)
         {
@@ -167,13 +169,11 @@ void MazeHandler::updateAI() //move to EnemyHandler
 
 shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move to EnemyHandler
 {
-    auto testEntities = maze_->getWalls();
-    auto player = maze_->getPlayer();
-    if (enemy->getEntity()->getGlobalBounds().intersects(player->getEntity()->getGlobalBounds()))
+    if (enemy->getEntity()->getGlobalBounds().intersects(player_->getEntity()->getGlobalBounds()))
     {
-        return player;
+        return player_;
     }
-    for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntity)
+    for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
     {
         if(enemy->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
             {
@@ -381,31 +381,35 @@ void MazeHandler::updatePlayer()
 void MazeHandler::render()
 {
     window_->clear();
-    window_->display();
     //walls
     for(auto i = walls_.begin(); i != walls_.end(); ++i)
     {
-        auto drawEntity = (*i)->getEntity();
-        window_->draw(*drawEntity);
+        window_->draw(*((*i)->getEntity()));
+    }
+    //fruits
+    for(auto i = fruits_.begin(); i != fruits_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
     }
     //keys
-    for(auto i = maze_->getKeys().begin(); i != maze_->getKeys().end(); ++i)
+    for(auto i = keys_.begin(); i != keys_.end(); ++i)
     {
         window_->draw(*((*i)->getEntity()));
     }
     //doors
-    for(auto i = maze_->getDoors().begin(); i != maze_->getDoors().end(); ++i)
+    for(auto i = doors_.begin(); i != doors_.end(); ++i)
     {
         window_->draw(*((*i)->getEntity()));
     }
     //Enemies
-    for(auto i = maze_->getEnemies().begin(); i != maze_->getEnemies().end(); ++i)
+    for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
     {
         window_->draw(*((*i)->getEntity()));
     }
+    //Player
     window_->draw(*(maze_->getPlayer()->getEntity()));
-    window_->display();
 
+    window_->display();
 }
 
 bool MazeHandler::getPlayerState()

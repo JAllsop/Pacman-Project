@@ -1,21 +1,11 @@
 #include "maze.h"
 
-Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resources/maze.txt"}
+Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resources/maze.txt"}, maxFruits{0}
 {
-    /*
-    startXPos = 50;// control maze top left location X
-    startYPos = 50;// control maze top left location Y
 
-    //all entities have the same dimension, this makes it easier to work with
-    entityWidth_ = 40.0;
-    entityHeight_ = 40.0;
-    */
-    maxFruits = 0;
     // Make sure containers are empty
-    char_.clear();
-    maze_.clear();
 
-    init();
+    //init();
 }
 
 Maze::~Maze()

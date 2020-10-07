@@ -4,6 +4,7 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
 {
     // Objects
     maze_ = make_shared<Maze>(window);
+    maze_->init();
     // Time var
     milli1 = sf::milliseconds(110);
     milli2 = sf::milliseconds(100);
@@ -170,7 +171,7 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move t
 
 //cannot pass superclass vector of pointers to base class class vector of pointers
 /*
-shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, const string type) //move to PlayerHandley (& Player Handler??)
+shared_ptr<Entity> MazeHandler::collision(shared_ptr<Entity> movingEntity, vector<shared_ptr<Entity>) //move to PlayerHandley (& Player Handler??)
 {
     auto testEntities = maze_->getWalls();
     for(auto testEntity = testEntities.begin(); testEntity != testEntities.end(); ++testEntity)

@@ -8,7 +8,8 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
     loadLevel();
 
     // Time var
-    enemySpeed = sf::milliseconds(350);
+    enemySpeed1 = sf::milliseconds(350);
+    enemySpeed2 = sf::milliseconds(350);
     playerSpeed = sf::milliseconds(100);
     powerPelletTime = sf::milliseconds(5000);
 
@@ -37,11 +38,17 @@ void MazeHandler::loadLevel()
 
 void MazeHandler::run()
 {
-    if(enemyClock.getElapsedTime() >= enemySpeed)
+    if(enemyClock1.getElapsedTime() >= enemySpeed1)
     {
-        updateAI();
+        updateAI(0);
         //enemyHandler_->run();
-        enemyClock.restart();
+        enemyClock1.restart();
+    }
+    if(enemyClock2.getElapsedTime() >= enemySpeed2)
+    {
+        updateAI(1);
+        //enemyHandler_->run();
+        enemyClock2.restart();
     }
     if(playerClock.getElapsedTime() >= playerSpeed)
     {
@@ -65,38 +72,54 @@ void MazeHandler::run()
     }
     render();
 }
+/*
+void MazeHandler::enemyMoveDown()
+{
 
-void MazeHandler::updateAI() //move to EnemyHandler
+    (*i)->moveDown();
+    hasMoved = true;
+    auto test = enemyCollision(*i);
+    if(test != *i)
+    {
+        if(typeid(test) == typeid(Player))
+        {
+            //super pellet check
+        }
+        else //hitting wall
+        {
+            hasMoved = false;
+            (*i)->moveUp();
+        }
+    }
+}
+*/
+void MazeHandler::enemyMoveUp()
+{
+
+}
+
+void MazeHandler::enemyMoveRight()
+{
+
+}
+
+void MazeHandler::enemyMoveLeft()
+{
+
+}
+
+void MazeHandler::updateAI(int enemyNum) //move to EnemyHandler
 {
     auto hasMoved = false;
-    for (auto i = enemies_.begin(); i != enemies_.end(); ++i)
-    {
-        //cout << (*i)->getX() << ";" << (*i)->getY() << "\n";
+    //for (auto i = enemies_.begin(); i != enemies_.end(); ++i)
+    //{
+    auto i = enemies_.begin() + enemyNum;
         while(hasMoved == false)
         {
             random = (rand()%4)+1;
             switch(random)
             {//better seperation (especially for testing) if indivual function for each movement
-            case 1 : //Up
-                {
-                    (*i)->moveUp();
-                    hasMoved = true;
-                    auto test = enemyCollision(*i);
-                    if(test != *i)
-                    {
-                        if(typeid(*test) == typeid(Player))
-                        {
-                            //super pellet check
-                        }
-                        else //hitting wall
-                        {
-                            hasMoved = false;
-                            (*i)->moveDown();
-                        }
-                    }
-                }
-                break;
-            case 2 :  //Down
+            case 1 : //Down
                 {
                     (*i)->moveDown();
                     hasMoved = true;
@@ -111,6 +134,25 @@ void MazeHandler::updateAI() //move to EnemyHandler
                         {
                             hasMoved = false;
                             (*i)->moveUp();
+                        }
+                    }
+                }
+                break;
+            case 2 :  //Up
+                {
+                    (*i)->moveUp();
+                    hasMoved = true;
+                    auto test = enemyCollision(*i);
+                    if(test != *i)
+                    {
+                        if(typeid(*test) == typeid(Player))
+                        {
+                            //super pellet check
+                        }
+                        else //hitting wall
+                        {
+                            hasMoved = false;
+                            (*i)->moveDown();
                         }
                     }
                 }
@@ -154,7 +196,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
                 break;
             }
         }
-    }
+    //}
 }
 
 shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move to EnemyHandler

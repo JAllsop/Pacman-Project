@@ -15,12 +15,18 @@ public:
     void loadLevel(); //changing level possible
 
     void updatePlayer();
-    void updateAI();
+    void updateAI(int enemyNum);
 
     bool getPlayerState();
     bool allFruitsEaten();
 
     void render();// This is part of the display PS: change later
+
+    //enemy movement with Collision
+    void enemyMoveDown();
+    void enemyMoveUp();
+    void enemyMoveRight();
+    void enemyMoveLeft();
 
     //player movement with Collision
     void playerMoveDown();
@@ -64,10 +70,12 @@ private:
     int powerPellets;
 
     //SfML
-    sf::Time enemySpeed;
+    sf::Time enemySpeed1;
+    sf::Time enemySpeed2;
     sf::Time playerSpeed;
     sf::Time powerPelletTime;
-    sf::Clock enemyClock;
+    sf::Clock enemyClock1;
+    sf::Clock enemyClock2;
     sf::Clock playerClock;
     sf::Clock powerPelletClock;
 

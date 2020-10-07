@@ -83,7 +83,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
         {
             switch(random)
             {//better seperation (especially for testing) if indivual function for each movement
-            case '1' : //Up
+            case 1 : //Up
                 {
                     (*i)->moveUp();
                     hasMoved = true;
@@ -103,7 +103,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
                     }
                 }
                 break;
-            case '2' :  //Down
+            case 2 :  //Down
                 {
                     (*i)->moveDown();
                     hasMoved = true;
@@ -123,7 +123,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
                     }
                 }
                 break;
-            case '3' : //Left
+            case 3 : //Left
                 {
                     (*i)->moveLeft();
                     hasMoved = true;
@@ -143,7 +143,7 @@ void MazeHandler::updateAI() //move to EnemyHandler
                     }
                 }
                 break;
-            case '4' : //Right
+            case 4 : //Right
                 {
                     (*i)->moveRight();
                     auto test = enemyCollision(*i);

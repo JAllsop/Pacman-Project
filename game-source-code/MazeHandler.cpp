@@ -15,12 +15,12 @@ MazeHandler::~MazeHandler()
 
 void MazeHandler::run()
 {
-    if(isPlayerDead == false)
+    if(isPlayerDead != true || isFruitFinished != true)
     {
         auto [state, fruit] = playerHandler_->run();
         isPlayerDead = state;
         isFruitFinished = fruit;
-        isPlayerDead = enemyHandler_->run();
+        isPlayerDead = isPlayerDead | enemyHandler_->run();
     }
     render();
 }

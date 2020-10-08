@@ -70,19 +70,17 @@ private:
     bool isAllFruitsEaten;
 
     //counters
-    int keys;
-    int fruits;
-    int powerPellets;
+    //int keys;
+    //int fruits;
+    //int powerPellets;
 
     //SfML
     sf::Time enemySpeed1;
     sf::Time enemySpeed2;
     sf::Time playerSpeed;
-    sf::Time powerPelletTime;
     sf::Clock enemyClock1;
     sf::Clock enemyClock2;
     sf::Clock playerClock;
-    sf::Clock powerPelletClock;
 
 };
 

@@ -16,11 +16,13 @@
 class Maze
 {
 public:
-    Maze(shared_ptr<sf::RenderWindow> window);
+    Maze();
     virtual ~Maze();
+
     // Functions
     void init();
     void read();
+
     //getters
     int getMaxFruits();
     shared_ptr<Player> getPlayer();
@@ -40,7 +42,6 @@ private:
     void loadAssets();
     void loadEntity(const char entity_m, const int x, const int y);
     // Variables
-    shared_ptr<sf::RenderWindow> window_;
 
     shared_ptr<Player> player_;
     vector<shared_ptr<Enemy>> enemies_;
@@ -53,15 +54,6 @@ private:
 
     int maxFruits;
     string level_;
-
-    vector<vector<char>> char_;// holder for inputs
-    float startXPos;
-    float startYPos;
-
-    // Entity variables
-    vector<vector<shared_ptr<Entity>>> maze_;// actually returned by the maze
-    // Movable entities
-    shared_ptr<Enemy> enemy_;
 };
 
 #endif // MAZE_H

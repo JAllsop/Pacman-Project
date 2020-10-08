@@ -1,23 +1,34 @@
 #include "PlayerHandler.h"
 
-PlayerHandler::PlayerHandler(shared_ptr<sf::RenderWindow> window, shared_ptr<Maze> maze) : window_{window}, maze_{maze}
+PlayerHandler::PlayerHandler(shared_ptr<sf::RenderWindow> window, shared_ptr<Maze> maze) : window_{window}, keys{0}, fruits{0}, powerPellets{0}
 {
-    enemies_ = maze_->getEnemies();
-    player_ = maze_->getPlayer();
-    walls_ = maze_->getWalls();
-    keys_ = maze_->getKeys();
-    fruits_ = maze_->getFruits();
-    powerPellets_ = maze_->getPowerPellets();
-    doors_ = maze_->getDoors();
+    //maze_ = maze;
+    enemies_ = maze->getEnemies();
+    player_ = maze->getPlayer();
+    walls_ = maze->getWalls();
+    keys_ = maze->getKeys();
+    fruits_ = maze->getFruits();
+    powerPellets_ = maze->getPowerPellets();
+    doors_ = maze->getDoors();
+    maxFruits_ = maze->getMaxFruits();
+    powerPelletTime = sf::milliseconds(8000);
 }
-
 PlayerHandler::~PlayerHandler()
 {
-
+    //dtor
 }
 
-void PlayerHandler::update()
+bool PlayerHandler::update()
 {
+    if(powerPellets > 0)
+    {
+        if(powerPelletClock.getElapsedTime() >= powerPelletTime){
+            powerPellets--;
+            powerPelletClock.restart();
+        }
+    }
+    else{powerPelletClock.restart();}
+    playerMoveDown();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         playerMoveDown();
@@ -34,6 +45,11 @@ void PlayerHandler::update()
     {
         playerMoveRight();
     }
+    if(fruits == maxFruits_)
+    {
+        return true;
+    }
+    return false;
 }
 
 void PlayerHandler::playerMoveDown()
@@ -66,7 +82,7 @@ void PlayerHandler::playerMoveRight()
 
 bool PlayerHandler::resolveCollision()
 {
-    bool reverseMovement = false; //change initiliasation
+    auto reverseMovement = false; //change initiliasation
     auto collideEntity = playerCollision();
     if(typeid(collideEntity) != typeid(Player))
     {
@@ -80,7 +96,7 @@ bool PlayerHandler::resolveCollision()
             auto index = fruits_.begin() + distance(fruits_.begin(), it);
             fruits_.erase(index);
 
-            //fruits++; property of player todo
+            fruits++;
         }
         else if(typeid(*collideEntity) == typeid(Key))
         {
@@ -88,22 +104,22 @@ bool PlayerHandler::resolveCollision()
             auto index = keys_.begin() + distance(keys_.begin(), it);
             keys_.erase(index);
 
-            //keys++; property of player todo
+            keys++;
         }
         else if(typeid(*collideEntity) == typeid(Door))
         {
-            //if(keys > 0)
-            //{
+            if(keys > 0)
+            {
                 auto it = find(doors_.begin(), doors_.end(), collideEntity);
                 auto index = doors_.begin() + distance(doors_.begin(), it);
                 doors_.erase(index);
 
-                //keys--; property of player todo
-            //}
-            //else
-            //{
+                keys--;
+            }
+            else
+            {
                 reverseMovement = true;
-            //}
+            }
         }
         else if(typeid(*collideEntity) == typeid(PowerPellet))
         {
@@ -111,18 +127,18 @@ bool PlayerHandler::resolveCollision()
             auto index = powerPellets_.begin() + distance(powerPellets_.begin(), it);
             powerPellets_.erase(index);
             //change ghost colour
-            //powerPellets++; property of player todo
+            powerPellets++;
         }
         else if(typeid(collideEntity) == typeid(Enemy))
         {
-            //if(powerPellets > 0)
-            //{
-                //collideEntity->setPosition(collideEntity->getInitialX(),collideEntity->getInitialY());
-            //}
-            //else
-            //{
+            if(powerPellets > 0)
+            {
+                collideEntity->setPosition(collideEntity->getInitialX(),collideEntity->getInitialY());
+            }
+            else
+            {
                 //isPlayerDead = true;
-            //}
+            }
         }
     }
     return reverseMovement;
@@ -166,4 +182,43 @@ shared_ptr<Entity> PlayerHandler::playerCollision() //move to PlayerHandler
             }
     }
     return player_;
+}
+
+void PlayerHandler::render()
+{
+    window_->clear();
+    //walls
+    for(auto i = walls_.begin(); i != walls_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //fruits
+    for(auto i = fruits_.begin(); i != fruits_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //keys
+    for(auto i = keys_.begin(); i != keys_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //doors
+    for(auto i = doors_.begin(); i != doors_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //power pellets
+    for(auto i = powerPellets_.begin(); i != powerPellets_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //Enemies
+    for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
+    {
+        window_->draw(*((*i)->getEntity()));
+    }
+    //Player
+    window_->draw(*(player_->getEntity()));
+
+    window_->display();
 }

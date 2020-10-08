@@ -1,10 +1,7 @@
 #include "maze.h"
 
-Maze::Maze(shared_ptr<sf::RenderWindow> window) : window_{window}, level_{"resources/maze.txt"}, maxFruits{0}
+Maze::Maze() : level_{"resources/maze.txt"}, maxFruits{0}
 {
-
-    // Make sure containers are empty
-
     init();
 }
 

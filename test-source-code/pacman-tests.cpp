@@ -3,28 +3,35 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 
-#define l 40.0f
-
 TEST_CASE("Player Basic Movement")
 {
     auto testPlayer = Player(blockSize, blockSize, sf::Color::Blue);
     testPlayer.setPosition(500, 500);
 
-    auto y = testPlayer.getY();
-    testPlayer.moveDown();
-    CHECK(y + blockSize == testPlayer.getY());
-
-    y = testPlayer.getY();
-    testPlayer.moveUp();
-    CHECK(y - blockSize == testPlayer.getY());
-
-    auto x = testPlayer.getX();
-    testPlayer.moveRight();
-    CHECK(x + blockSize == testPlayer.getX());
-
-    x = testPlayer.getX();
-    testPlayer.moveLeft();
-    CHECK(x - blockSize == testPlayer.getX());
+    SUBCASE("Move Down")
+    {
+        auto y = testPlayer.getY();
+        testPlayer.moveDown();
+        CHECK(y + blockSize == testPlayer.getY());
+    }
+    SUBCASE("Move Up")
+    {
+        auto y = testPlayer.getY();
+        testPlayer.moveUp();
+        CHECK(y - blockSize == testPlayer.getY());
+    }
+    SUBCASE("Move Right")
+    {
+        auto x = testPlayer.getX();
+        testPlayer.moveRight();
+        CHECK(x + blockSize == testPlayer.getX());
+    }
+    SUBCASE("Move Left")
+    {
+        auto x = testPlayer.getX();
+        testPlayer.moveLeft();
+        CHECK(x - blockSize == testPlayer.getX());
+    }
 }
 
 TEST_CASE("Enemy Basic Movement")
@@ -32,32 +39,40 @@ TEST_CASE("Enemy Basic Movement")
     auto testEnemy = Enemy(blockSize, blockSize, sf::Color::Blue);
     testEnemy.setPosition(500, 500);
 
-    auto y = testEnemy.getY();
-    testEnemy.moveDown();
-    CHECK(y + blockSize == testEnemy.getY());
-
-    y = testEnemy.getY();
-    testEnemy.moveUp();
-    CHECK(y - blockSize == testEnemy.getY());
-
-    auto x = testEnemy.getX();
-    testEnemy.moveRight();
-    CHECK(x + blockSize == testEnemy.getX());
-
-    x = testEnemy.getX();
-    testEnemy.moveLeft();
-    CHECK(x - blockSize == testEnemy.getX());
+    SUBCASE("Move Down")
+    {
+        auto y = testEnemy.getY();
+        testEnemy.moveDown();
+        CHECK(y + blockSize == testEnemy.getY());
+    }
+    SUBCASE("Move Up")
+    {
+        auto y = testEnemy.getY();
+        testEnemy.moveUp();
+        CHECK(y - blockSize == testEnemy.getY());
+    }
+    SUBCASE("Move Right")
+    {
+        auto x = testEnemy.getX();
+        testEnemy.moveRight();
+        CHECK(x + blockSize == testEnemy.getX());
+    }
+    SUBCASE("Move Left")
+    {
+        auto x = testEnemy.getX();
+        testEnemy.moveLeft();
+        CHECK(x - blockSize == testEnemy.getX());
+    }
 }
 
-/*requires more seperation of logic in order to simulate collision testing correctly
-TEST_CASE("Maze Test")
+TEST_CASE("Logic Layer Test")
 {
-    std::shared_ptr<sf::RenderWindow> window;
-    window = make_shared<sf::RenderWindow>(sf::VideoMode(1600, 900), "test");
+
+    auto window = make_shared<sf::RenderWindow>(sf::VideoMode(600, 800, 32), "Unit Test");
     auto testInstance = MazeHandler(window);
-    testInstance->getMaze();
+    testInstance.init("resources/maze_test");
+    testInstance.run();
 }
-*/
 
 //ensures console doesn't close upon test completion when running .exe
 int main(int argc, char** argv) {

@@ -19,13 +19,10 @@ void MazeHandler::init(string level)
 
 void MazeHandler::run()
 {
-    if(isPlayerDead != true || isFruitFinished != true)
-    {
-        auto [state, fruit] = playerHandler_->run();
-        isPlayerDead = state;
-        isFruitFinished = fruit;
-        isPlayerDead = isPlayerDead | enemyHandler_->run();
-    }
+    auto [state, fruit] = playerHandler_->run();
+    isPlayerDead = state;
+    isFruitFinished = fruit;
+    isPlayerDead = isPlayerDead | enemyHandler_->run();
     render();
 }
 

@@ -1,6 +1,6 @@
 #include "PlayerHandler.h"
 
-PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, fruits{0}, powerPellets{0}
+PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, powerPellets{0}, isPlayerDead{false}, isFruitFinished{false}
 {
     enemies_ = maze->getEnemies();
     player_ = maze->getPlayer();
@@ -9,7 +9,7 @@ PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, fruits{0}, powerP
     fruits_ = maze->getFruits();
     powerPellets_ = maze->getPowerPellets();
     doors_ = maze->getDoors();
-    maxFruits_ = maze->getMaxFruits();
+    fruits = maze->getMaxFruits();
     powerPelletTime = sf::milliseconds(8000);
     playerSpeed = sf::milliseconds(350);
 }
@@ -18,12 +18,11 @@ PlayerHandler::~PlayerHandler()
     //dtor
 }
 
-bool PlayerHandler::run()
+tuple<bool, bool> PlayerHandler::run()
 {
-    isPlayerDead = false;
     if(playerClock.getElapsedTime() >= playerSpeed)
     {
-        isPlayerDead = update();
+        update();
         playerClock.restart();
     }
     if(powerPellets > 0)
@@ -33,12 +32,12 @@ bool PlayerHandler::run()
             powerPelletClock.restart();
         }
     }
-    return isPlayerDead;
+    return {isPlayerDead, isFruitFinished};
 }
 
 
 
-bool PlayerHandler::update()
+void PlayerHandler::update()
 {
     if(powerPellets > 0)
     {
@@ -47,7 +46,11 @@ bool PlayerHandler::update()
             powerPelletClock.restart();
         }
     }
-    else{powerPelletClock.restart();}
+    else
+    {
+        powerPelletClock.restart();
+    }
+    //playerMoveDown();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         playerMoveDown();
@@ -64,11 +67,6 @@ bool PlayerHandler::update()
     {
         playerMoveRight();
     }
-    if(fruits == maxFruits_)
-    {
-        return true;
-    }
-    return false;
 }
 
 void PlayerHandler::playerMoveDown()
@@ -115,7 +113,11 @@ bool PlayerHandler::resolveCollision()
             auto index = fruits_.begin() + distance(fruits_.begin(), it);
             fruits_.erase(index);
 
-            fruits++;
+            fruits--;
+            if(fruits == 0)
+                {
+                    isFruitFinished = true;
+                }
         }
         else if(typeid(*collideEntity) == typeid(Key))
         {
@@ -146,11 +148,9 @@ bool PlayerHandler::resolveCollision()
             auto index = powerPellets_.begin() + distance(powerPellets_.begin(), it);
             powerPellets_.erase(index);
 
-
-
             powerPellets++;
         }
-        else if(typeid(collideEntity) == typeid(Enemy))
+        else if(typeid(*collideEntity) == typeid(Enemy))
         {
             if(powerPellets > 0)
             {

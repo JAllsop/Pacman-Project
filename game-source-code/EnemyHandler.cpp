@@ -7,7 +7,7 @@ EnemyHandler::EnemyHandler(shared_ptr<Maze> maze)
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
     doors_ = maze->getDoors();
-    enemySpeed1 = sf::milliseconds(400);
+    enemySpeed1 = sf::milliseconds(1000);
     enemySpeed2 = sf::milliseconds(400);
 }
 

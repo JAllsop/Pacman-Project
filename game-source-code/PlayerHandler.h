@@ -9,8 +9,8 @@ class PlayerHandler
     public:
         PlayerHandler(shared_ptr<Maze> maze);
         virtual ~PlayerHandler();
-        bool run();
-        bool update();
+        tuple<bool, bool> run();
+        void update();
         void render(shared_ptr<sf::RenderWindow> window);
 
         //movement
@@ -40,9 +40,10 @@ class PlayerHandler
         sf::Clock powerPelletClock;
 
         bool isPlayerDead;
+        bool isFruitFinished;
+
         int keys;
         int fruits;
-        int maxFruits_;
         int powerPellets;
 };
 

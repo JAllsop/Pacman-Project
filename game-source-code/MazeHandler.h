@@ -12,8 +12,6 @@ public:
     virtual ~MazeHandler();
     void run();
 
-    void loadLevel(); //changing level possible
-
     void updatePlayer();
     void updateAI(int enemyNum);
 
@@ -54,21 +52,12 @@ private:
     shared_ptr<PlayerHandler> playerHandler_;
     shared_ptr<EnemyHandler> enemyHandler_;
 
-    //just needed for handlers???
-    vector<shared_ptr<Wall>> walls_;
-    vector<shared_ptr<Key>> keys_;
-    vector<shared_ptr<Door>> doors_;
-    vector<shared_ptr<PowerPellet>> powerPellets_;
-    vector<shared_ptr<Fruit>> fruits_;
-    vector<shared_ptr<Enemy>> enemies_;
-    shared_ptr<Player> player_;
-
     // Random rumber gen
     int random;
 
     //Direction indicators
     bool isPlayerDead;
-    bool isAllFruitsEaten;
+    bool isFruitFinished;
 
     //counters
     //int keys;

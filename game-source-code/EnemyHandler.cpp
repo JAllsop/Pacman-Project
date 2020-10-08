@@ -70,10 +70,6 @@ bool EnemyHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        if(typeid(test) == typeid(Player))
-        {
-            //super pellet check
-        }
         else //hitting wall
         {
             hasMoved = false;
@@ -90,10 +86,6 @@ bool EnemyHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        if(typeid(test) == typeid(Player))
-        {
-            //super pellet check
-        }
         else //hitting wall
         {
             hasMoved = false;
@@ -110,10 +102,6 @@ bool EnemyHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        if(typeid(test) == typeid(Player))
-        {
-            //super pellet check
-        }
         else //hitting wall
         {
             hasMoved = false;
@@ -130,10 +118,6 @@ bool EnemyHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        if(typeid(test) == typeid(Player))
-        {
-            //super pellet check
-        }
         else //hitting wall
         {
             hasMoved = false;

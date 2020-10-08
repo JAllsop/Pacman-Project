@@ -44,7 +44,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         break;
     case 'f' :
         {
-            auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
+            auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color::White);
             fruit_->setPosition(x*blockSize, y*blockSize);
             fruit_->setTexture("resources/fruit.png");
             fruits_.push_back(fruit_);
@@ -53,7 +53,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         break;
     case 'd' :
         {
-            auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color::Yellow);
+            auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color::White);
             door_->setPosition(x*blockSize, y*blockSize);
             door_->setTexture("resources/door.png");
             doors_.push_back(door_);
@@ -61,7 +61,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         break;
     case 'k' :
         {
-            auto key_ = make_shared<Key>(blockSize,blockSize,sf::Color::Yellow);
+            auto key_ = make_shared<Key>(blockSize,blockSize,sf::Color::White);
             key_->setPosition(x*blockSize, y*blockSize);
             key_->setTexture("resources/key.png");
             keys_.push_back(key_);
@@ -87,7 +87,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         break;
     case 'p' :
         {
-            player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
+            player_= make_shared<Player>(blockSize,blockSize,sf::Color::White);
             player_->setTexture("resources/player.png");
             player_->setPosition(x*blockSize, y*blockSize);
         }

@@ -15,8 +15,8 @@ PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, powerPellets{0}, 
     score_ = make_unique<Score>();
     score_->update(0);
 
-    powerPelletTime = sf::milliseconds(8000);
-    playerSpeed = sf::milliseconds(350);
+    powerPelletTime = sf::milliseconds(6000);
+    playerSpeed = sf::milliseconds(150);
 }
 PlayerHandler::~PlayerHandler()
 {

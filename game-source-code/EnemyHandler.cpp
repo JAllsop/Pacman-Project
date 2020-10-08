@@ -7,8 +7,8 @@ EnemyHandler::EnemyHandler(shared_ptr<Maze> maze)
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
     doors_ = maze->getDoors();
-    enemySpeed1 = sf::milliseconds(1000);
-    enemySpeed2 = sf::milliseconds(400);
+    enemySpeed1 = sf::milliseconds(250);
+    enemySpeed2 = sf::milliseconds(250);
 }
 
 EnemyHandler::~EnemyHandler()
@@ -30,37 +30,48 @@ void EnemyHandler::run()
     }
 }
 
-void EnemyHandler::update(int enemyNum) //move to EnemyHandler
+void EnemyHandler::update(int enemyNum)
 {
     auto hasMoved = false;
     auto i = enemies_.begin() + enemyNum;
+    vector<int> obstacle;
+    random = (rand()%4)+1;
     while(hasMoved == false)
     {
-        random = (rand()%4)+1;
+        //accounts for moving in the same direction if a static entity is there
+        if (std::find(obstacle.begin(), obstacle.end(), random) != obstacle.end())
+        {
+             random = (rand()%4)+1;
+        }
         switch(random)
-        {//better seperation (especially for testing) if indivual function for each movement
+        {
         case 1 : //Down
             {
+                obstacle.push_back(random);
                 hasMoved = enemyMoveDown(i);
             }
             break;
         case 2 :  //Up
             {
+                obstacle.push_back(random);
                 hasMoved = enemyMoveUp(i);
             }
             break;
         case 3 : //Left
             {
+                obstacle.push_back(random);
                 hasMoved = enemyMoveLeft(i);
             }
             break;
         case 4 : //Right
             {
+                obstacle.push_back(random);
                 hasMoved = enemyMoveRight(i);
             }
             break;
         }
     }
+    obstacle.clear();
 }
 
 bool EnemyHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)

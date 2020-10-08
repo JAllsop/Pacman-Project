@@ -70,11 +70,8 @@ bool EnemyHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        else //hitting wall
-        {
-            hasMoved = false;
-            (*i)->moveUp();
-        }
+        hasMoved = false;
+        (*i)->moveUp();
     }
     return hasMoved;
 }
@@ -86,11 +83,8 @@ bool EnemyHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        else //hitting wall
-        {
-            hasMoved = false;
-            (*i)->moveDown();
-        }
+        hasMoved = false;
+        (*i)->moveDown();
     }
     return hasMoved;
 }
@@ -102,11 +96,8 @@ bool EnemyHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        else //hitting wall
-        {
-            hasMoved = false;
-            (*i)->moveLeft();
-        }
+        hasMoved = false;
+        (*i)->moveLeft();
     }
     return hasMoved;
 }
@@ -118,11 +109,8 @@ bool EnemyHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        else //hitting wall
-        {
-            hasMoved = false;
-            (*i)->moveRight();
-        }
+        hasMoved = false;
+        (*i)->moveRight();
     }
     return hasMoved;
 }

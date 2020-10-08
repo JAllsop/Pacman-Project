@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "maze.h"
+#include "Score.h"
 
 class PlayerHandler
 {
@@ -39,11 +40,14 @@ class PlayerHandler
         sf::Time powerPelletTime;
         sf::Clock powerPelletClock;
 
+        unique_ptr<Score> score_;
+
         bool isPlayerDead;
         bool isFruitFinished;
 
         int keys;
         int fruits;
+        int maxFruits;
         int powerPellets;
 };
 

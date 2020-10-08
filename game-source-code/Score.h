@@ -13,17 +13,16 @@ using namespace std;
 class Score
 {
     public:
-        Score(shared_ptr<sf::RenderWindow> window);
+        Score();
         virtual ~Score();
         void update(int fruits);
-        void render();
+        void render(shared_ptr<sf::RenderWindow> window);
         void loadAssets();
     protected:
 
     private:
         sf::Text score_;
         sf::Font font_;
-        shared_ptr<sf::RenderWindow> window_;
 
 };
 

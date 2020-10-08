@@ -1,15 +1,20 @@
 #include "PlayerHandler.h"
 
-PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, powerPellets{0}, isPlayerDead{false}, isFruitFinished{false}
+PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, powerPellets{0}, isPlayerDead{false}, isFruitFinished{false}, fruits{0}
 {
     enemies_ = maze->getEnemies();
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
     keys_ = maze->getKeys();
     fruits_ = maze->getFruits();
+    maxFruits = maze->getMaxFruits();
+
     powerPellets_ = maze->getPowerPellets();
     doors_ = maze->getDoors();
-    fruits = maze->getMaxFruits();
+
+    score_ = make_unique<Score>();
+    score_->update(0);
+
     powerPelletTime = sf::milliseconds(8000);
     playerSpeed = sf::milliseconds(350);
 }
@@ -116,8 +121,9 @@ bool PlayerHandler::resolveCollision()
             auto index = fruits_.begin() + distance(fruits_.begin(), it);
             fruits_.erase(index);
 
-            fruits--;
-            if(fruits == 0)
+            fruits++;
+            score_->update(fruits);
+            if(fruits == maxFruits)
                 {
                     isFruitFinished = true;
                 }
@@ -255,6 +261,7 @@ void PlayerHandler::render(shared_ptr<sf::RenderWindow> window)
     }
     //Player
     window->draw(*(player_->getEntity()));
+    score_->render(window);
 
     window->display();
 }

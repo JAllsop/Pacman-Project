@@ -1,6 +1,6 @@
 #include "Score.h"
 
-Score::Score(shared_ptr<sf::RenderWindow> window) : window_{window}
+Score::Score()
 {
     loadAssets();
     score_.setFont(font_);
@@ -15,14 +15,16 @@ Score::~Score()
 void Score::update(int fruits)
 {
     stringstream ss;
-    ss<<fruits;
-    score_.setString(ss.str().c_str());
+    ss << fruits;
+    string output = "Score: ";
+    output.append(ss.str().c_str());
+    score_.setString(output);
     score_.setPosition(sf::Vector2f(1000,0));
 }
 
-void Score::render()
+void Score::render(shared_ptr<sf::RenderWindow> window)
 {
-    window_->draw(score_);
+    window->draw(score_);
 }
 
 void Score::loadAssets()

@@ -5,6 +5,7 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
     // Objects
     maze_ = make_shared<Maze>();
     playerHandler_ = make_shared<PlayerHandler>(maze_);
+    enemyHandler_ = make_shared<EnemyHandler>(maze_);
 
     loadLevel();
 
@@ -23,7 +24,8 @@ MazeHandler::~MazeHandler()
 {
     //dtor
 }
-//just needed for handlers???
+/*
+just needed for handlers???
 void MazeHandler::loadLevel()
 {
     enemies_ = maze_->getEnemies();
@@ -34,22 +36,25 @@ void MazeHandler::loadLevel()
     powerPellets_ = maze_->getPowerPellets();
     doors_ = maze_->getDoors();
 }
-
+*/
 void MazeHandler::run()
 {
-    if(enemyClock1.getElapsedTime() >= enemySpeed1)
+    if(isPlayerDead == false)
     {
-        updateAI(0);
-        //enemyHandler_->run();
-        enemyClock1.restart();
+        if(enemyClock1.getElapsedTime() >= enemySpeed1)
+        {
+            updateAI(0);
+            //enemyHandler_->run();
+            enemyClock1.restart();
+        }
+        if(enemyClock2.getElapsedTime() >= enemySpeed2)
+        {
+            updateAI(1);
+            //enemyHandler_->run();
+            enemyClock2.restart();
+        }
+        isPlayerDead = playerHandler_->run();
     }
-    if(enemyClock2.getElapsedTime() >= enemySpeed2)
-    {
-        updateAI(1);
-        //enemyHandler_->run();
-        enemyClock2.restart();
-    }
-    isPlayerDead = playerHandler_->run();
     render();
 }
 

@@ -2,7 +2,13 @@
 
 EnemyHandler::EnemyHandler(shared_ptr<Maze> maze)
 {
-    //ctor
+    srand(time(0));
+    enemies_ = maze->getEnemies();
+    player_ = maze->getPlayer();
+    walls_ = maze->getWalls();
+    doors_ = maze->getDoors();
+    enemySpeed1 = sf::milliseconds(400);
+    enemySpeed2 = sf::milliseconds(400);
 }
 
 EnemyHandler::~EnemyHandler()
@@ -10,7 +16,21 @@ EnemyHandler::~EnemyHandler()
     //dtor
 }
 
-void MazeHandler::update(int enemyNum) //move to EnemyHandler
+void EnemyHandler::run()
+{
+    if(enemyClock1.getElapsedTime() >= enemySpeed1)
+    {
+        update(0);
+        enemyClock1.restart();
+    }
+    if(enemyClock2.getElapsedTime() >= enemySpeed2)
+    {
+        update(1);
+        enemyClock2.restart();
+    }
+}
+
+void EnemyHandler::update(int enemyNum) //move to EnemyHandler
 {
     auto hasMoved = false;
     auto i = enemies_.begin() + enemyNum;
@@ -43,7 +63,7 @@ void MazeHandler::update(int enemyNum) //move to EnemyHandler
     }
 }
 
-bool MazeHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveDown();
     auto hasMoved = true;
@@ -63,7 +83,7 @@ bool MazeHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
     return hasMoved;
 }
 
-bool MazeHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveUp();
     auto hasMoved = true;
@@ -83,7 +103,7 @@ bool MazeHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
     return hasMoved;
 }
 
-bool MazeHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveRight();
     auto hasMoved = true;
@@ -103,7 +123,7 @@ bool MazeHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
     return hasMoved;
 }
 
-bool MazeHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveLeft();
     auto hasMoved = true;
@@ -123,7 +143,7 @@ bool MazeHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
     return hasMoved;
 }
 
-shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move to EnemyHandler
+shared_ptr<Entity> EnemyHandler::enemyCollision(shared_ptr<Enemy> enemy)
 {
     if (enemy->getEntity()->getGlobalBounds().intersects(player_->getEntity()->getGlobalBounds()))
     {

@@ -48,7 +48,6 @@ bool PlayerHandler::update()
         }
     }
     else{powerPelletClock.restart();}
-    //playerMoveDown();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         playerMoveDown();

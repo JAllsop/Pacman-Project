@@ -29,6 +29,10 @@ tuple<bool, bool> PlayerHandler::run()
     {
         if(powerPelletClock.getElapsedTime() >= powerPelletTime){
             powerPellets--;
+            for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
+            {
+                (*i)->setColor(sf::Color::Red);
+            }
             powerPelletClock.restart();
         }
     }
@@ -50,7 +54,6 @@ void PlayerHandler::update()
     {
         powerPelletClock.restart();
     }
-    //playerMoveDown();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         playerMoveDown();
@@ -99,7 +102,7 @@ void PlayerHandler::playerMoveRight()
 
 bool PlayerHandler::resolveCollision()
 {
-    auto reverseMovement = false; //change initiliasation
+    auto reverseMovement = false;
     auto collideEntity = playerCollision();
     if(typeid(collideEntity) != typeid(Player))
     {
@@ -149,6 +152,11 @@ bool PlayerHandler::resolveCollision()
             powerPellets_.erase(index);
 
             powerPellets++;
+
+            for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
+            {
+                (*i)->setColor(sf::Color::Magenta);
+            }
         }
         else if(typeid(*collideEntity) == typeid(Enemy))
         {
@@ -165,7 +173,7 @@ bool PlayerHandler::resolveCollision()
     return reverseMovement;
 }
 
-shared_ptr<Entity> PlayerHandler::playerCollision() //move to PlayerHandler
+shared_ptr<Entity> PlayerHandler::playerCollision()
 {
     for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
     {

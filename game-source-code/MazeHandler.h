@@ -53,7 +53,7 @@ private:
     //handlers
     shared_ptr<PlayerHandler> playerHandler_;
     shared_ptr<EnemyHandler> enemyHandler_;
-    /*
+
     //just needed for handlers???
     vector<shared_ptr<Wall>> walls_;
     vector<shared_ptr<Key>> keys_;
@@ -62,7 +62,7 @@ private:
     vector<shared_ptr<Fruit>> fruits_;
     vector<shared_ptr<Enemy>> enemies_;
     shared_ptr<Player> player_;
-    */
+
     // Random rumber gen
     int random;
 

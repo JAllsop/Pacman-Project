@@ -1,6 +1,6 @@
 #include "MazeHandler.h"
 
-MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}, random{0}//, keys{0}, fruits{0}, powerPellets{0}
+MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}
 {
     // Objects
     maze_ = make_shared<Maze>();
@@ -24,8 +24,7 @@ MazeHandler::~MazeHandler()
 {
     //dtor
 }
-/*
-just needed for handlers???
+//just needed for handlers???
 void MazeHandler::loadLevel()
 {
     enemies_ = maze_->getEnemies();
@@ -36,7 +35,7 @@ void MazeHandler::loadLevel()
     powerPellets_ = maze_->getPowerPellets();
     doors_ = maze_->getDoors();
 }
-*/
+
 void MazeHandler::run()
 {
     if(isPlayerDead == false)

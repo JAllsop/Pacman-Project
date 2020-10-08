@@ -170,6 +170,7 @@ bool PlayerHandler::resolveCollision()
             if(powerPellets > 0)
             {
                 collideEntity->setPosition(collideEntity->getInitialX(),collideEntity->getInitialY());
+                score_->update(fruits + 5);
             }
             else
             {

@@ -2,7 +2,7 @@
 
 MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}, isPlayerDead{false}, isFruitFinished{false}
 {
-    init();
+    init("resources/maze.txt");
 }
 
 MazeHandler::~MazeHandler()
@@ -10,9 +10,9 @@ MazeHandler::~MazeHandler()
     //dtor
 }
 
-void MazeHandler::init()
+void MazeHandler::init(string level)
 {
-    maze_ = make_shared<Maze>();
+    maze_ = make_shared<Maze>(level);
     playerHandler_ = make_shared<PlayerHandler>(maze_);
     enemyHandler_ = make_shared<EnemyHandler>(maze_);
 }

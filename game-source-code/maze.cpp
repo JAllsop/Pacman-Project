@@ -1,6 +1,6 @@
 #include "maze.h"
 
-Maze::Maze() : level_{"resources/maze.txt"}, maxFruits{0}
+Maze::Maze(string level) : level_{level}, maxFruits{0}
 {
     init();
 }

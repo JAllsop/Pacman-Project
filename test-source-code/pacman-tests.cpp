@@ -7,47 +7,46 @@
 
 TEST_CASE("Player Basic Movement")
 {
-    auto testPlayer = Player(l, l, sf::Color::Blue);
+    auto testPlayer = Player(blockSize, blockSize, sf::Color::Blue);
     testPlayer.setPosition(500, 500);
 
     auto y = testPlayer.getY();
     testPlayer.moveDown();
-    CHECK(y + l == testPlayer.getY());
+    CHECK(y + blockSize == testPlayer.getY());
 
     y = testPlayer.getY();
     testPlayer.moveUp();
-    CHECK(y - l == testPlayer.getY());
+    CHECK(y - blockSize == testPlayer.getY());
 
     auto x = testPlayer.getX();
     testPlayer.moveRight();
-    CHECK(x + l == testPlayer.getX());
+    CHECK(x + blockSize == testPlayer.getX());
 
     x = testPlayer.getX();
     testPlayer.moveLeft();
-    CHECK(x - l == testPlayer.getX());
+    CHECK(x - blockSize == testPlayer.getX());
 }
 
-//inheritance structure needs to be implemented correctly
 TEST_CASE("Enemy Basic Movement")
 {
-    auto testEnemy = Enemy(l, l, sf::Color::Blue);
-    testPlayer.setPosition(500, 500);
+    auto testEnemy = Enemy(blockSize, blockSize, sf::Color::Blue);
+    testEnemy.setPosition(500, 500);
 
     auto y = testEnemy.getY();
-    testPlayer.moveDown();
-    CHECK(y + l == testPlayer.getY());
+    testEnemy.moveDown();
+    CHECK(y + blockSize == testEnemy.getY());
 
     y = testEnemy.getY();
-    testPlayer.moveUp();
-    CHECK(y - l == testPlayer.getY());
+    testEnemy.moveUp();
+    CHECK(y - blockSize == testEnemy.getY());
 
     auto x = testEnemy.getX();
-    testPlayer.moveRight();
-    CHECK(x + l == testPlayer.getX());
+    testEnemy.moveRight();
+    CHECK(x + blockSize == testEnemy.getX());
 
     x = testEnemy.getX();
-    testPlayer.moveLeft();
-    CHECK(x - l == testPlayer.getX());
+    testEnemy.moveLeft();
+    CHECK(x - blockSize == testEnemy.getX());
 }
 
 /*requires more seperation of logic in order to simulate collision testing correctly
@@ -59,14 +58,14 @@ TEST_CASE("Maze Test")
     testInstance->getMaze();
 }
 */
+
+//ensures console doesn't close upon test completion when running .exe
 int main(int argc, char** argv) {
-
     doctest::Context context;
-
     int res = context.run();
-
-    if(context.shouldExit()) // important - query flags (and --exit) rely on the user doing this
+    if(context.shouldExit())
         return res;
+
     system("pause");
 }
 

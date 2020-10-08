@@ -10,7 +10,7 @@ class MazeHandler
 public:
     MazeHandler(shared_ptr<sf::RenderWindow> window);
     virtual ~MazeHandler();
-    void init();
+    void init(string level);
     void run();
     void render();
 

@@ -15,7 +15,7 @@
 class Maze
 {
 public:
-    Maze();
+    Maze(string level);
     virtual ~Maze();
 
     void init();

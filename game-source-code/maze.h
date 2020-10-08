@@ -4,7 +4,6 @@
 #include "player.h"
 #include "enemy.h"
 #include "Wall.h"
-#include "Path.h"
 #include "key.h"
 #include "Door.h"
 #include "fruit.h"
@@ -19,12 +18,11 @@ public:
     Maze();
     virtual ~Maze();
 
-    // Functions
     void init();
     void read();
 
-    //getters
     int getMaxFruits();
+
     shared_ptr<Player> getPlayer();
     vector<shared_ptr<Enemy>> getEnemies();
     vector<shared_ptr<Key>> getKeys();
@@ -34,14 +32,11 @@ public:
     vector<shared_ptr<PowerPellet>> getPowerPellets();
 
     void setLevel(string level_);
+
 protected:
 
 private:
-    void update();
-    void setUp();
-    void loadAssets();
     void loadEntity(const char entity_m, const int x, const int y);
-    // Variables
 
     shared_ptr<Player> player_;
     vector<shared_ptr<Enemy>> enemies_;

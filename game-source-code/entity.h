@@ -25,14 +25,15 @@ class Entity
 public:
     Entity(float width, float height, sf::Color color);
     virtual ~Entity();
-    //set stuff
+
     void setPosition(float xPos, float yPos);
     void setColor(sf::Color color);
     void setTexture(string file);
 
-    //Get positions
+
     float getX();
     float getY();
+
     shared_ptr<sf::RectangleShape> getEntity();
 
     float setInitialX(float x);

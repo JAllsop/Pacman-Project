@@ -12,14 +12,8 @@ Maze::~Maze()
 
 void Maze::init()
 {
-    read();
-}
-
-void Maze::read()
-{
     //error check needed
     ifstream fileReader(level_);
-    //fileReader.open(level_);
     while(fileReader)
     {
         auto line = ""s;
@@ -28,10 +22,8 @@ void Maze::read()
         {
             for(auto i = 0; i != line.size(); ++i)
             {
-                //cout << line.at(i);
                 loadEntity(line.at(i), i, lineNum);
             }
-            //cout << "\n";
             lineNum++;
         }
     }
@@ -41,7 +33,7 @@ void Maze::read()
 void Maze::loadEntity(const char entity_, const int x, const int y)
 {
     switch(entity_)
-    {//remove setPosition & Colour for alternate or standard object constructor
+    {
     case 'w' :
         {
             auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);

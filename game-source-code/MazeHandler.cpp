@@ -2,7 +2,6 @@
 
 MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window}, isPlayerDead{false}, isFruitFinished{false}
 {
-    // Objects
     maze_ = make_shared<Maze>();
     playerHandler_ = make_shared<PlayerHandler>(maze_);
     enemyHandler_ = make_shared<EnemyHandler>(maze_);

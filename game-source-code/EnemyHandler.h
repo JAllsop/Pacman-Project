@@ -11,10 +11,10 @@ class EnemyHandler
         virtual ~EnemyHandler();
         bool run();
 
-        bool moveDown(vector<shared_ptr<Enemy>>::iterator i);
-        bool moveUp(vector<shared_ptr<Enemy>>::iterator i);
-        bool moveRight(vector<shared_ptr<Enemy>>::iterator i);
-        bool moveLeft(vector<shared_ptr<Enemy>>::iterator i);
+        bool moveDown(int enemyNum);
+        bool moveUp(int enemyNum);
+        bool moveRight(int enemyNum);
+        bool moveLeft(int enemyNum);
 
     protected:
 

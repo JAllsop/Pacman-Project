@@ -47,8 +47,6 @@ tuple<bool, bool> PlayerHandler::run()
     return {isPlayerDead, isFruitFinished};
 }
 
-
-
 void PlayerHandler::update()
 {
     if(powerPellets > 0)

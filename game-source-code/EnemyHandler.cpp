@@ -34,7 +34,7 @@ bool EnemyHandler::run()
 void EnemyHandler::update(int enemyNum)
 {
     auto hasMoved = false;
-    auto i = enemies_.begin() + enemyNum;
+    //auto i = enemies_.begin() + enemyNum;
     vector<int> obstacle;
     random = (rand()%4)+1;
     while(hasMoved == false)
@@ -49,25 +49,25 @@ void EnemyHandler::update(int enemyNum)
         case 1 : //Down
             {
                 obstacle.push_back(random);
-                hasMoved = moveDown(i);
+                hasMoved = moveDown(enemyNum);
             }
             break;
         case 2 :  //Up
             {
                 obstacle.push_back(random);
-                hasMoved = moveUp(i);
+                hasMoved = moveUp(enemyNum);
             }
             break;
         case 3 : //Left
             {
                 obstacle.push_back(random);
-                hasMoved = moveLeft(i);
+                hasMoved = moveLeft(enemyNum);
             }
             break;
         case 4 : //Right
             {
                 obstacle.push_back(random);
-                hasMoved = moveRight(i);
+                hasMoved = moveRight(enemyNum);
             }
             break;
         }
@@ -75,8 +75,9 @@ void EnemyHandler::update(int enemyNum)
     obstacle.clear();
 }
 
-bool EnemyHandler::moveDown(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveDown(int enemyNum)
 {
+    auto i = enemies_.begin() + enemyNum;
     (*i)->moveDown();
     auto test = enemyCollision(*i);
     if(test != *i)
@@ -97,8 +98,9 @@ bool EnemyHandler::moveDown(vector<shared_ptr<Enemy>>::iterator i)
     return true;
 }
 
-bool EnemyHandler::moveUp(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveUp(int enemyNum)
 {
+    auto i = enemies_.begin() + enemyNum;
     (*i)->moveUp();
     auto test = enemyCollision(*i);
     if(test != *i)
@@ -119,8 +121,9 @@ bool EnemyHandler::moveUp(vector<shared_ptr<Enemy>>::iterator i)
     return true;
 }
 
-bool EnemyHandler::moveRight(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveRight(int enemyNum)
 {
+    auto i = enemies_.begin() + enemyNum;
     (*i)->moveRight();
     auto test = enemyCollision(*i);
     if(test != *i)
@@ -141,8 +144,9 @@ bool EnemyHandler::moveRight(vector<shared_ptr<Enemy>>::iterator i)
     return true;
 }
 
-bool EnemyHandler::moveLeft(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveLeft(int enemyNum)
 {
+    auto i = enemies_.begin() + enemyNum;
     (*i)->moveLeft();
     auto test = enemyCollision(*i);
     if(test != *i)

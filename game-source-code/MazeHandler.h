@@ -16,9 +16,12 @@ public:
     void updatePlayer();
     void updateAI(int enemyNum);
 
+    shared_ptr<Maze> getMaze();
+    shared_ptr<PlayerHandler> getPlayerHandler();
+    shared_ptr<EnemyHandler> getEnemyHandler();
+
     bool getPlayerState();
     bool allFruitsEaten();
-    shared_ptr<Maze> getMaze();
 
 protected:
 

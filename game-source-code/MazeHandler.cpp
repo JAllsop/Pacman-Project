@@ -30,6 +30,16 @@ void MazeHandler::render()
     playerHandler_->render(window_);
 }
 
+shared_ptr<PlayerHandler> MazeHandler::getPlayerHandler()
+{
+    return playerHandler_;
+}
+
+shared_ptr<EnemyHandler> MazeHandler::getEnemyHandler()
+{
+    return enemyHandler_;
+}
+
 shared_ptr<Maze> MazeHandler::getMaze()
 {
     return maze_;

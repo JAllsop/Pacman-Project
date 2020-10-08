@@ -12,7 +12,8 @@ Game::Game()
 
     menuState_ = make_shared<MenuState>(window_);
     gameState_ = make_shared<GameState>(window_);
-    endState_ = make_shared<EndState>(window_);
+    loseState_ = make_shared<LoseState>(window_);
+    winState_ = make_shared<WinState>(window_);
 
     initState();
 }
@@ -65,9 +66,13 @@ void Game::updateStates()
     {
         stateContainer_.push(gameState_);
     }
-    if (gameState_->isStateEnd())
+    if (gameState_->playerState())
     {
-        stateContainer_.push(endState_);
+        stateContainer_.push(loseState_);
+    }
+    if(gameState_->fruitsEaten())
+    {
+        stateContainer_.push(winState_);
     }
 }
 

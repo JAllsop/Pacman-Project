@@ -25,19 +25,16 @@ void GameState::loadAssets()
 void GameState::update()
 {
     mazeHandler_->run();
-    //boardhandler->run();
-    //playerHandler_->run();
-    //enemyHandler->run();
-    //fruitHandler->run();
-    //keyHandler->run();
-
 }
 
-bool GameState::isStateEnd()
+bool GameState::playerState()
 {
-    if (mazeHandler_->getPlayerState() == true)
-    {
-        return true;
-    }
-    return false;
+    return mazeHandler_->getPlayerState();
 }
+
+bool GameState::fruitsEaten()
+{
+    return mazeHandler_->allFruitsEaten();
+}
+
+

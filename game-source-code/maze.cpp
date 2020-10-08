@@ -12,22 +12,27 @@ Maze::~Maze()
 
 void Maze::init()
 {
-    //error check needed
     ifstream fileReader(level_);
-    while(fileReader)
+    if (!fileReader)
     {
-        auto line = ""s;
-        auto lineNum{0};
-        while (getline(fileReader, line))
+        cerr << "Error: level not found";
+    } else
+    {
+            while(fileReader)
         {
-            for(auto i = 0; i != line.size(); ++i)
+            auto line = ""s;
+            auto lineNum{0};
+            while (getline(fileReader, line))
             {
-                loadEntity(line.at(i), i, lineNum);
+                for(auto i = 0; i != line.size(); ++i)
+                {
+                    loadEntity(line.at(i), i, lineNum);
+                }
+                lineNum++;
             }
-            lineNum++;
         }
+        fileReader.close();
     }
-    fileReader.close();
 }
 
 void Maze::loadEntity(const char entity_, const int x, const int y)

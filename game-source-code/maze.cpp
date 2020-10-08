@@ -36,7 +36,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
     {
     case 'w' :
         {
-            auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
+            auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color(46, 49, 49));
             wall_->setPosition(x*blockSize, y*blockSize);
             wall_->setTexture("resources/wall.png");
             walls_.push_back(wall_);

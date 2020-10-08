@@ -77,11 +77,9 @@ private:
     //SfML
     sf::Time enemySpeed1;
     sf::Time enemySpeed2;
-    sf::Time playerSpeed;
+
     sf::Clock enemyClock1;
     sf::Clock enemyClock2;
-    sf::Clock playerClock;
-
 };
 
 #endif // MAZEHANDLER_H

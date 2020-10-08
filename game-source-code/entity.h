@@ -34,21 +34,20 @@ public:
     float getY();
     shared_ptr<sf::RectangleShape> getEntity();
 
+    float setInitialX(float x);
+    float setInitialY(float y);
+
     float getInitialX();
     float getInitialY();
 
-    // The entity boundaries
-    float getTop();
-    float getBottom();
-    float getLeft();
-    float getRight();
-
 protected:
     shared_ptr<sf::RectangleShape> entity_;
-    float height_;
-    float width_;
+
     float initialX;
     float initialY;
+
+    float height_;
+    float width_;
 
 private:
 };

@@ -2,9 +2,6 @@
 
 Entity::Entity(float width, float height, sf::Color color) : height_{height}, width_{width}
 {
-    //initialX = getX();
-    //initialY = getY();
-    //isAlive_ = true;
     entity_ = make_shared<sf::RectangleShape>(sf::Vector2f(width_,height_));
     entity_->setFillColor(color);
     entity_->setPosition(0,0);
@@ -40,6 +37,17 @@ shared_ptr<sf::RectangleShape> Entity::getEntity()
 {
     return entity_;
 }
+
+float Entity::setInitialX(float x)
+{
+    initialX = x;
+}
+
+float Entity::setInitialY(float y)
+{
+    initialY = y;
+}
+
 
 float Entity::getInitialX()
 {

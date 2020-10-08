@@ -1,8 +1,7 @@
 #include "PlayerHandler.h"
 
-PlayerHandler::PlayerHandler(shared_ptr<sf::RenderWindow> window, shared_ptr<Maze> maze) : window_{window}, keys{0}, fruits{0}, powerPellets{0}
+PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, fruits{0}, powerPellets{0}
 {
-    //maze_ = maze;
     enemies_ = maze->getEnemies();
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
@@ -12,11 +11,32 @@ PlayerHandler::PlayerHandler(shared_ptr<sf::RenderWindow> window, shared_ptr<Maz
     doors_ = maze->getDoors();
     maxFruits_ = maze->getMaxFruits();
     powerPelletTime = sf::milliseconds(8000);
+    playerSpeed = sf::milliseconds(350);
 }
 PlayerHandler::~PlayerHandler()
 {
     //dtor
 }
+
+bool PlayerHandler::run()
+{
+    isPlayerDead = false;
+    if(playerClock.getElapsedTime() >= playerSpeed)
+    {
+        isPlayerDead = update();
+        playerClock.restart();
+    }
+    if(powerPellets > 0)
+    {
+        if(powerPelletClock.getElapsedTime() >= powerPelletTime){
+            powerPellets--;
+            powerPelletClock.restart();
+        }
+    }
+    return isPlayerDead;
+}
+
+
 
 bool PlayerHandler::update()
 {
@@ -28,7 +48,7 @@ bool PlayerHandler::update()
         }
     }
     else{powerPelletClock.restart();}
-    playerMoveDown();
+    //playerMoveDown();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         playerMoveDown();
@@ -126,7 +146,9 @@ bool PlayerHandler::resolveCollision()
             auto it = find(powerPellets_.begin(), powerPellets_.end(), collideEntity);
             auto index = powerPellets_.begin() + distance(powerPellets_.begin(), it);
             powerPellets_.erase(index);
-            //change ghost colour
+
+
+
             powerPellets++;
         }
         else if(typeid(collideEntity) == typeid(Enemy))
@@ -137,7 +159,7 @@ bool PlayerHandler::resolveCollision()
             }
             else
             {
-                //isPlayerDead = true;
+                isPlayerDead = true;
             }
         }
     }
@@ -181,44 +203,51 @@ shared_ptr<Entity> PlayerHandler::playerCollision() //move to PlayerHandler
                 return (*testEntity);
             }
     }
+    for(auto testEntity = enemies_.begin(); testEntity != enemies_.end(); ++testEntity)
+    {
+        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return (*testEntity);
+            }
+    }
     return player_;
 }
 
-void PlayerHandler::render()
+void PlayerHandler::render(shared_ptr<sf::RenderWindow> window)
 {
-    window_->clear();
+    window->clear();
     //walls
     for(auto i = walls_.begin(); i != walls_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //fruits
     for(auto i = fruits_.begin(); i != fruits_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //keys
     for(auto i = keys_.begin(); i != keys_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //doors
     for(auto i = doors_.begin(); i != doors_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //power pellets
     for(auto i = powerPellets_.begin(); i != powerPellets_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //Enemies
     for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
     {
-        window_->draw(*((*i)->getEntity()));
+        window->draw(*((*i)->getEntity()));
     }
     //Player
-    window_->draw(*(player_->getEntity()));
+    window->draw(*(player_->getEntity()));
 
-    window_->display();
+    window->display();
 }

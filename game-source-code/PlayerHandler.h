@@ -7,11 +7,11 @@
 class PlayerHandler
 {
     public:
-        PlayerHandler(shared_ptr<sf::RenderWindow> window, shared_ptr<Maze> maze);
+        PlayerHandler(shared_ptr<Maze> maze);
         virtual ~PlayerHandler();
-        void run();
+        bool run();
         bool update();
-        void render();
+        void render(shared_ptr<sf::RenderWindow> window);
 
         //movement
         void playerMoveDown();
@@ -23,7 +23,6 @@ class PlayerHandler
         shared_ptr<Entity> playerCollision();
         bool resolveCollision();
 
-        //shared_ptr<Maze> maze_;
         shared_ptr<sf::RenderWindow> window_;
 
         vector<shared_ptr<Wall>> walls_;
@@ -34,10 +33,13 @@ class PlayerHandler
         vector<shared_ptr<Enemy>> enemies_;
         shared_ptr<Player> player_;
 
+        sf::Clock playerClock;
+        sf::Time playerSpeed;
+
         sf::Time powerPelletTime;
         sf::Clock powerPelletClock;
 
-
+        bool isPlayerDead;
         int keys;
         int fruits;
         int maxFruits_;

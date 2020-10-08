@@ -82,6 +82,8 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto enemy_= make_shared<Enemy>(blockSize,blockSize, sf::Color::Red);
             enemy_->setPosition(x*blockSize, y*blockSize);
+            enemy_->setInitialX(x*blockSize);
+            enemy_->setInitialY(y*blockSize);
             enemies_.push_back(enemy_);
         }
         break;

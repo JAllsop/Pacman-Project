@@ -1,13 +1,7 @@
 #include "EnemyHandler.h"
 
-EnemyHandler::EnemyHandler(vector<vector<shared_ptr<Entity>>> mazeE, vector<vector<char>>& mazeC,bool& isPlayerD, int& pP, int pX, int pY) : m_{mazeE},
-mChar_{mazeC},
-isPlayerDead{isPlayerD},
-powerPellet{pP},
-playerX{pX},
-playerY{pY}
+EnemyHandler::EnemyHandler(shared_ptr<Maze> maze)
 {
-    setup();
     //ctor
 }
 
@@ -16,160 +10,139 @@ EnemyHandler::~EnemyHandler()
     //dtor
 }
 
-void EnemyHandler::run()
+void MazeHandler::update(int enemyNum) //move to EnemyHandler
 {
-    update();
-}
-
-void EnemyHandler::setup()
-{
-    for(int i = 0; i < MAX_MAZE_X; i++)
-    {
-        for(int j = 0; j < MAX_MAZE_Y; j++)
-        {
-            if(mChar_[i][j] == 'e')
-            {
-                enemyX = i;
-                enemyY = j;
-                eEntityX = i;
-                eEntityY = j;
-            }
-        }
-    }
-    // Stores starting screen position of the enemy
-    ePosX = m_[enemyX][enemyY]->getX();
-    ePosY = m_[enemyX][enemyY]->getY();
-}
-
-bool EnemyHandler::isEdable()
-{
-    if(powerPellet > 0)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-void EnemyHandler::reset()
-{
-    m_[eEntityX][eEntityY]->setPosition(ePosX,ePosY);
-    enemyX = eEntityX;
-    enemyY = eEntityY;
-}
-
-void EnemyHandler::checkPlayerCollision()
-{
-    if(enemyX == playerX && enemyY == playerY)
-    {
-        if(isEdable() == true)
-        {
-            reset();
-        }
-        else
-        {
-            isPlayerDead = true;
-        }
-    }
-}
-
-void EnemyHandler::changeColorState()
-{
-    if(isEdable() == true)
-    {
-        m_[eEntityX][eEntityY]->setColor(sf::Color::Red);
-    }
-    else
-    {
-        m_[eEntityX][eEntityY]->setColor(sf::Color::White);
-    }
-}
-
-void EnemyHandler::up(bool& hasMoved)
-{
-    m_[eEntityX][eEntityY]->moveUp();
-    enemyX--;
-    hasMoved = true;
-    checkPlayerCollision();
-}
-
-void EnemyHandler::down(bool& hasMoved)
-{
-    m_[eEntityX][eEntityY]->moveDown();
-    enemyX++;
-    hasMoved = true;
-    checkPlayerCollision();
-}
-
-void EnemyHandler::left(bool& hasMoved)
-{
-    m_[eEntityX][eEntityY]->moveLeft();
-    enemyY--;
-    hasMoved = true;
-    checkPlayerCollision();
-}
-
-void EnemyHandler::right(bool& hasMoved)
-{
-    m_[eEntityX][eEntityY]->moveRight();
-    enemyY++;
-    hasMoved = true;
-    checkPlayerCollision();
-}
-
-void EnemyHandler::update()
-{
-    bool hasMoved = false;
-    srand(time(0));
-    if(random == 0)// if at the start of the game
+    auto hasMoved = false;
+    auto i = enemies_.begin() + enemyNum;
+    while(hasMoved == false)
     {
         random = (rand()%4)+1;
-    }
-    for(int i = 0; i < MAX_MAZE_X; i++)
-    {
-        for(int j = 0; j < MAX_MAZE_Y; j++)
-        {
-            if(random == 1) // Up
+        switch(random)
+        {//better seperation (especially for testing) if indivual function for each movement
+        case 1 : //Down
             {
-                if((mChar_[enemyX-1][enemyY] != 'w' && mChar_[enemyX-1][enemyY] != 'd'))
-                {
-                    up(hasMoved);
-                    break;
-                }
+                hasMoved = enemyMoveDown(i);
             }
-            else if(random == 2) // down
+            break;
+        case 2 :  //Up
             {
-                if((mChar_[enemyX+1][enemyY] != 'w' && mChar_[enemyX+1][enemyY] != 'd'))
-                {
-                    down(hasMoved);
-                    break;
-                }
+                hasMoved = enemyMoveUp(i);
             }
-            else if(random == 3 ) // left
+            break;
+        case 3 : //Left
             {
-                if((mChar_[enemyX][enemyY-1] != 'w' && mChar_[enemyX][enemyY-1] != 'd'))
-                {
-                    left(hasMoved);
-                    break;
-                }
+                hasMoved = enemyMoveLeft(i);
             }
-            else if(random == 4) // right
+            break;
+        case 4 : //Right
             {
-                if((mChar_[enemyX][enemyY+1] != 'w' && mChar_[enemyX][enemyY+1] != 'd'))
-                {
-                    right(hasMoved);
-                    break;
-                }
+                hasMoved = enemyMoveRight(i);
             }
-            changeColorState();
-            if (hasMoved == false)
-            {
-                random = (rand()%4)+1;
-            }
-        }
-        if(hasMoved == true)
-        {
             break;
         }
     }
 }
+
+bool MazeHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
+{
+    (*i)->moveDown();
+    auto hasMoved = true;
+    auto test = enemyCollision(*i);
+    if(test != *i)
+    {
+        if(typeid(test) == typeid(Player))
+        {
+            //super pellet check
+        }
+        else //hitting wall
+        {
+            hasMoved = false;
+            (*i)->moveUp();
+        }
+    }
+    return hasMoved;
+}
+
+bool MazeHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
+{
+    (*i)->moveUp();
+    auto hasMoved = true;
+    auto test = enemyCollision(*i);
+    if(test != *i)
+    {
+        if(typeid(test) == typeid(Player))
+        {
+            //super pellet check
+        }
+        else //hitting wall
+        {
+            hasMoved = false;
+            (*i)->moveDown();
+        }
+    }
+    return hasMoved;
+}
+
+bool MazeHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
+{
+    (*i)->moveRight();
+    auto hasMoved = true;
+    auto test = enemyCollision(*i);
+    if(test != *i)
+    {
+        if(typeid(test) == typeid(Player))
+        {
+            //super pellet check
+        }
+        else //hitting wall
+        {
+            hasMoved = false;
+            (*i)->moveLeft();
+        }
+    }
+    return hasMoved;
+}
+
+bool MazeHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
+{
+    (*i)->moveLeft();
+    auto hasMoved = true;
+    auto test = enemyCollision(*i);
+    if(test != *i)
+    {
+        if(typeid(test) == typeid(Player))
+        {
+            //super pellet check
+        }
+        else //hitting wall
+        {
+            hasMoved = false;
+            (*i)->moveRight();
+        }
+    }
+    return hasMoved;
+}
+
+shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move to EnemyHandler
+{
+    if (enemy->getEntity()->getGlobalBounds().intersects(player_->getEntity()->getGlobalBounds()))
+    {
+        return player_;
+    }
+    for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
+    {
+        if(enemy->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return *testEntity;
+            }
+    }
+    for(auto testEntity = doors_.begin(); testEntity != doors_.end(); ++testEntity)
+    {
+        if(enemy->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
+            {
+                return *testEntity;
+            }
+    }
+    return enemy;
+}
+

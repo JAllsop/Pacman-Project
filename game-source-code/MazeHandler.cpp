@@ -4,14 +4,13 @@ MazeHandler::MazeHandler(shared_ptr<sf::RenderWindow> window) : window_{window},
 {
     // Objects
     maze_ = make_shared<Maze>();
-    playerHandler_ = make_shared<PlayerHandler>(window_, maze_);
+    playerHandler_ = make_shared<PlayerHandler>(maze_);
 
     loadLevel();
 
     // Time var
     enemySpeed1 = sf::milliseconds(400);
     enemySpeed2 = sf::milliseconds(400);
-    playerSpeed = sf::milliseconds(350);
 
     // Directions, not used yet
     isPlayerDead = false;
@@ -50,12 +49,7 @@ void MazeHandler::run()
         //enemyHandler_->run();
         enemyClock2.restart();
     }
-    if(playerClock.getElapsedTime() >= playerSpeed)
-    {
-        //updatePlayer();
-        isPlayerDead = playerHandler_->update();
-        playerClock.restart();
-    }
+    isPlayerDead = playerHandler_->run();
     render();
 }
 
@@ -101,7 +95,7 @@ bool MazeHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
 
 bool MazeHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
 {
-(*i)->moveRight();
+    (*i)->moveRight();
     auto hasMoved = true;
     auto test = enemyCollision(*i);
     if(test != *i)
@@ -195,49 +189,9 @@ shared_ptr<Entity> MazeHandler::enemyCollision(shared_ptr<Enemy> enemy) //move t
     return enemy;
 }
 
-shared_ptr<Entity> MazeHandler::playerCollision() //move to PlayerHandler
-{
-    for(auto testEntity = walls_.begin(); testEntity != walls_.end(); ++testEntity)
-    {
-        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return (*testEntity);
-            }
-    }
-    for(auto testEntity = fruits_.begin(); testEntity != fruits_.end(); ++testEntity)
-    {
-        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return (*testEntity);
-            }
-    }
-    for(auto testEntity = keys_.begin(); testEntity != keys_.end(); ++testEntity)
-    {
-        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return (*testEntity);
-            }
-    }
-    for(auto testEntity = doors_.begin(); testEntity != doors_.end(); ++testEntity)
-    {
-        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return (*testEntity);
-            }
-    }
-    for(auto testEntity = powerPellets_.begin(); testEntity != powerPellets_.end(); ++testEntity)
-    {
-        if(player_->getEntity()->getGlobalBounds().intersects((*testEntity)->getEntity()->getGlobalBounds()))
-            {
-                return (*testEntity);
-            }
-    }
-    return player_;
-}
-
 void MazeHandler::render()
 {
-    playerHandler_->render();
+    playerHandler_->render(window_);
 }
 
 shared_ptr<Maze> MazeHandler::getMaze()

@@ -23,6 +23,12 @@ void Entity::setColor(sf::Color color)
     entity_->setFillColor(color);
 }
 
+void Entity::setTexture(string file)
+{
+    (entityTexture).loadFromFile(file);
+    entity_->setTexture(&entityTexture, false);
+}
+
 float Entity::getX()
 {
     return entity_->getPosition().x;

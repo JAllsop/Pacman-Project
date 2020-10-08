@@ -46,6 +46,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto wall_ = make_shared<Wall>(blockSize,blockSize,sf::Color::Blue);
             wall_->setPosition(x*blockSize, y*blockSize);
+            wall_->setTexture("resources/wall.png");
             walls_.push_back(wall_);
         }
         break;
@@ -53,14 +54,16 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto fruit_ = make_shared<Fruit>(blockSize,blockSize,sf::Color(166,61,0));
             fruit_->setPosition(x*blockSize, y*blockSize);
+            fruit_->setTexture("resources/fruit.png");
             fruits_.push_back(fruit_);
             maxFruits++;
         }
         break;
     case 'd' :
         {
-            auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color(53,19,0));
+            auto door_ = make_shared<Door>(blockSize,blockSize,sf::Color::Yellow);
             door_->setPosition(x*blockSize, y*blockSize);
+            door_->setTexture("resources/door.png");
             doors_.push_back(door_);
         }
         break;
@@ -68,6 +71,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto key_ = make_shared<Key>(blockSize,blockSize,sf::Color::Yellow);
             key_->setPosition(x*blockSize, y*blockSize);
+            key_->setTexture("resources/key.png");
             keys_.push_back(key_);
         }
         break;
@@ -75,6 +79,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto powerPellet_ = make_shared<PowerPellet>(blockSize,blockSize,sf::Color::White);
             powerPellet_->setPosition(x*blockSize, y*blockSize);
+            powerPellet_->setTexture("resources/pill.png");
             powerPellets_.push_back(powerPellet_);
         }
         break;
@@ -82,6 +87,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
         {
             auto enemy_= make_shared<Enemy>(blockSize,blockSize, sf::Color::Red);
             enemy_->setPosition(x*blockSize, y*blockSize);
+            enemy_->setTexture("resources/enemy.png");
             enemy_->setInitialX(x*blockSize);
             enemy_->setInitialY(y*blockSize);
             enemies_.push_back(enemy_);
@@ -90,6 +96,7 @@ void Maze::loadEntity(const char entity_, const int x, const int y)
     case 'p' :
         {
             player_= make_shared<Player>(blockSize,blockSize,sf::Color::Green);
+            player_->setTexture("resources/player.png");
             player_->setPosition(x*blockSize, y*blockSize);
         }
         break;

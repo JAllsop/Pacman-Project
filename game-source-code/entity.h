@@ -16,7 +16,7 @@
 #include <algorithm>
 #include <ctime>
 
-#define blockSize 40
+#define blockSize 50
 
 using namespace std;
 
@@ -28,6 +28,7 @@ public:
     //set stuff
     void setPosition(float xPos, float yPos);
     void setColor(sf::Color color);
+    void setTexture(string file);
 
     //Get positions
     float getX();
@@ -42,6 +43,7 @@ public:
 
 protected:
     shared_ptr<sf::RectangleShape> entity_;
+    sf::Texture entityTexture;
 
     float initialX;
     float initialY;

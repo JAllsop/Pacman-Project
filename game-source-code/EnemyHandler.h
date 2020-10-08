@@ -28,11 +28,11 @@ class EnemyHandler
         vector<shared_ptr<Door>> doors_;
         vector<shared_ptr<Enemy>> enemies_;
 
-        sf::Time enemySpeed1;
-        sf::Time enemySpeed2;
+        sf::Time enemySpeed;
 
         sf::Clock enemyClock1;
         sf::Clock enemyClock2;
+        sf::Clock enemyClock3;
 
         int random;
         bool isPlayerDead;

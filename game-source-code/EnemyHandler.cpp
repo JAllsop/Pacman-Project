@@ -7,8 +7,7 @@ EnemyHandler::EnemyHandler(shared_ptr<Maze> maze): isPlayerDead{false}
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
     doors_ = maze->getDoors();
-    enemySpeed1 = sf::milliseconds(450);
-    enemySpeed2 = sf::milliseconds(450);
+    enemySpeed = sf::milliseconds(450);
 }
 
 EnemyHandler::~EnemyHandler()
@@ -18,15 +17,20 @@ EnemyHandler::~EnemyHandler()
 
 bool EnemyHandler::run()
 {
-    if(enemyClock1.getElapsedTime() >= enemySpeed1)
+    if(enemyClock1.getElapsedTime() >= enemySpeed)
     {
         update(0);
         enemyClock1.restart();
     }
-    if(enemyClock2.getElapsedTime() >= enemySpeed2)
+    if(enemyClock2.getElapsedTime() >= enemySpeed)
     {
         update(1);
         enemyClock2.restart();
+    }
+    if(enemyClock3.getElapsedTime() >= enemySpeed)
+    {
+        update(2);
+        enemyClock3.restart();
     }
     return isPlayerDead;
 }
@@ -34,7 +38,6 @@ bool EnemyHandler::run()
 void EnemyHandler::update(int enemyNum)
 {
     auto hasMoved = false;
-    //auto i = enemies_.begin() + enemyNum;
     vector<int> obstacle;
     random = (rand()%4)+1;
     while(hasMoved == false)

@@ -24,6 +24,7 @@ MazeHandler::~MazeHandler()
 {
     //dtor
 }
+
 //just needed for handlers???
 void MazeHandler::loadLevel()
 {
@@ -40,18 +41,7 @@ void MazeHandler::run()
 {
     if(isPlayerDead == false)
     {
-        if(enemyClock1.getElapsedTime() >= enemySpeed1)
-        {
-            updateAI(0);
-            //enemyHandler_->run();
-            enemyClock1.restart();
-        }
-        if(enemyClock2.getElapsedTime() >= enemySpeed2)
-        {
-            updateAI(1);
-            //enemyHandler_->run();
-            enemyClock2.restart();
-        }
+        enemyHandler_->run();
         isPlayerDead = playerHandler_->run();
     }
     render();

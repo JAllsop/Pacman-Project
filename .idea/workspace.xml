@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ee391061-86be-4bbc-b5e7-4a10df3f74c5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/game-source-code/MazeHandler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/game-source-code/MazeHandler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-source-code/Path.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-source-code/Path.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-source-code/entity.h" beforeDir="false" afterPath="$PROJECT_DIR$/game-source-code/entity.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-source-code/maze.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/game-source-code/maze.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-source-code/maze.h" beforeDir="false" afterPath="$PROJECT_DIR$/game-source-code/maze.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ib36LhOsmpEyhCZ0Mzu5bC6Yd1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee391061-86be-4bbc-b5e7-4a10df3f74c5" name="Default Changelist" comment="" />
+      <created>1602162287531</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602162287531</updated>
+      <workItem from="1602162291799" duration="8000" />
+    </task>
+    <servers />
+  </component>
+</project>

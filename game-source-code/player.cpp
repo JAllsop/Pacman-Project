@@ -9,8 +9,3 @@ Player::~Player()
 {
     //dtor
 }
-
-int Player::getLives()
-{
-    return lives;
-}

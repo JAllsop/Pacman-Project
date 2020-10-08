@@ -57,11 +57,6 @@ void Game::updateEvents()
 
 void Game::updateStates()
 {
-    // When we press backspace we want to go back to the menu state
-    //if(stateContainer_.size() > MIN_NUM_STATES && isMenuState_ == true)
-    //{
-    //    stateContainer_.pop();
-    //}
     if (!(stateContainer_.empty()) && isGameState_ == true)
     {
         stateContainer_.push(gameState_);

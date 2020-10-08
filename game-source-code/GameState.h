@@ -15,8 +15,9 @@ class GameState : public State
         virtual void loadAssets();
         // Gets the logic for the entities
         virtual void update();
-
+        // Check whether the player is dead
         bool playerState();
+        //Check whether all the fruits are eaten
         bool fruitsEaten();
 
 

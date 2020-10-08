@@ -10,7 +10,7 @@ WinState::WinState(shared_ptr<sf::RenderWindow> window) : State(), window_{windo
     text1.setString("GameOver");
     text2.setString("You Win");
     text1.setPosition(sf::Vector2f(0 ,0));
-    text2.setPosition(sf::Vector2f(0,100));
+    text2.setPosition(sf::Vector2f(0,50));
     texts_.push_back(text1);
     texts_.push_back(text2);
     //ctor

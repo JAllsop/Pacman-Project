@@ -1,14 +1,14 @@
 #include "EnemyHandler.h"
 
-EnemyHandler::EnemyHandler(shared_ptr<Maze> maze)
+EnemyHandler::EnemyHandler(shared_ptr<Maze> maze): isPlayerDead{false}
 {
     srand(time(0));
     enemies_ = maze->getEnemies();
     player_ = maze->getPlayer();
     walls_ = maze->getWalls();
     doors_ = maze->getDoors();
-    enemySpeed1 = sf::milliseconds(250);
-    enemySpeed2 = sf::milliseconds(250);
+    enemySpeed1 = sf::milliseconds(450);
+    enemySpeed2 = sf::milliseconds(450);
 }
 
 EnemyHandler::~EnemyHandler()
@@ -16,7 +16,7 @@ EnemyHandler::~EnemyHandler()
     //dtor
 }
 
-void EnemyHandler::run()
+bool EnemyHandler::run()
 {
     if(enemyClock1.getElapsedTime() >= enemySpeed1)
     {
@@ -28,6 +28,7 @@ void EnemyHandler::run()
         update(1);
         enemyClock2.restart();
     }
+    return isPlayerDead;
 }
 
 void EnemyHandler::update(int enemyNum)
@@ -48,25 +49,25 @@ void EnemyHandler::update(int enemyNum)
         case 1 : //Down
             {
                 obstacle.push_back(random);
-                hasMoved = enemyMoveDown(i);
+                hasMoved = moveDown(i);
             }
             break;
         case 2 :  //Up
             {
                 obstacle.push_back(random);
-                hasMoved = enemyMoveUp(i);
+                hasMoved = moveUp(i);
             }
             break;
         case 3 : //Left
             {
                 obstacle.push_back(random);
-                hasMoved = enemyMoveLeft(i);
+                hasMoved = moveLeft(i);
             }
             break;
         case 4 : //Right
             {
                 obstacle.push_back(random);
-                hasMoved = enemyMoveRight(i);
+                hasMoved = moveRight(i);
             }
             break;
         }
@@ -74,56 +75,92 @@ void EnemyHandler::update(int enemyNum)
     obstacle.clear();
 }
 
-bool EnemyHandler::enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveDown(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveDown();
-    auto hasMoved = true;
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        hasMoved = false;
+        if(typeid(*test) == typeid(Player))
+        {
+            if((*i)->getEntity()->getFillColor() == sf::Color::Magenta)//powerPellet Mode
+            {
+                (*i)->moveUp();
+                return true;
+            }
+            isPlayerDead = true;
+            return true;
+        }
         (*i)->moveUp();
+        return false;
     }
-    return hasMoved;
+    return true;
 }
 
-bool EnemyHandler::enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveUp(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveUp();
-    auto hasMoved = true;
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        hasMoved = false;
+        if(typeid(*test) == typeid(Player))
+        {
+            if((*i)->getEntity()->getFillColor() == sf::Color::Magenta)//powerPellet Mode
+            {
+                (*i)->moveDown();
+                return true;
+            }
+            isPlayerDead = true;
+            return true;
+        }
         (*i)->moveDown();
+        return false;
     }
-    return hasMoved;
+    return true;
 }
 
-bool EnemyHandler::enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveRight(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveRight();
-    auto hasMoved = true;
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        hasMoved = false;
+        if(typeid(*test) == typeid(Player))
+        {
+            if((*i)->getEntity()->getFillColor() == sf::Color::Magenta)//powerPellet Mode
+            {
+                (*i)->moveLeft();
+                return true;
+            }
+            isPlayerDead = true;
+            return true;
+        }
         (*i)->moveLeft();
+        return false;
     }
-    return hasMoved;
+    return true;
 }
 
-bool EnemyHandler::enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i)
+bool EnemyHandler::moveLeft(vector<shared_ptr<Enemy>>::iterator i)
 {
     (*i)->moveLeft();
-    auto hasMoved = true;
     auto test = enemyCollision(*i);
     if(test != *i)
     {
-        hasMoved = false;
+        if(typeid(*test) == typeid(Player))
+        {
+            if((*i)->getEntity()->getFillColor() == sf::Color::Magenta)//powerPellet Mode
+            {
+                (*i)->moveRight();
+                return true;
+            }
+            isPlayerDead = true;
+            return true;
+        }
         (*i)->moveRight();
+        return false;
     }
-    return hasMoved;
+    return true;
 }
 
 shared_ptr<Entity> EnemyHandler::enemyCollision(shared_ptr<Enemy> enemy)

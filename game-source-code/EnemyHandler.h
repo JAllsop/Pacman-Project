@@ -9,12 +9,12 @@ class EnemyHandler
     public:
         EnemyHandler(shared_ptr<Maze> maze);
         virtual ~EnemyHandler();
-        void run();
+        bool run();
 
-        bool enemyMoveDown(vector<shared_ptr<Enemy>>::iterator i);
-        bool enemyMoveUp(vector<shared_ptr<Enemy>>::iterator i);
-        bool enemyMoveRight(vector<shared_ptr<Enemy>>::iterator i);
-        bool enemyMoveLeft(vector<shared_ptr<Enemy>>::iterator i);
+        bool moveDown(vector<shared_ptr<Enemy>>::iterator i);
+        bool moveUp(vector<shared_ptr<Enemy>>::iterator i);
+        bool moveRight(vector<shared_ptr<Enemy>>::iterator i);
+        bool moveLeft(vector<shared_ptr<Enemy>>::iterator i);
 
     protected:
 
@@ -35,6 +35,7 @@ class EnemyHandler
         sf::Clock enemyClock2;
 
         int random;
+        bool isPlayerDead;
 };
 
 #endif // ENEMYHANDLER_H

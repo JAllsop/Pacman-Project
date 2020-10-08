@@ -17,10 +17,10 @@ void MazeHandler::run()
 {
     if(isPlayerDead == false)
     {
-        enemyHandler_->run();
         auto [state, fruit] = playerHandler_->run();
         isPlayerDead = state;
         isFruitFinished = fruit;
+        isPlayerDead = enemyHandler_->run();
     }
     render();
 }

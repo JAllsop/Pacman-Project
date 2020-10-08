@@ -15,7 +15,7 @@ PlayerHandler::PlayerHandler(shared_ptr<Maze> maze) : keys{0}, powerPellets{0}, 
     score_ = make_unique<Score>();
     score_->update(0);
 
-    powerPelletTime = sf::milliseconds(6000);
+    powerPelletTime = sf::milliseconds(4000);
     playerSpeed = sf::milliseconds(150);
 }
 PlayerHandler::~PlayerHandler()
@@ -34,9 +34,12 @@ tuple<bool, bool> PlayerHandler::run()
     {
         if(powerPelletClock.getElapsedTime() >= powerPelletTime){
             powerPellets--;
-            for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
+            if(powerPellets == 0)
             {
-                (*i)->setColor(sf::Color::Red);
+                for(auto i = enemies_.begin(); i != enemies_.end(); ++i)
+                {
+                    (*i)->setColor(sf::Color::Red);
+                }
             }
             powerPelletClock.restart();
         }
@@ -61,44 +64,44 @@ void PlayerHandler::update()
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        playerMoveDown();
+        moveDown();
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        playerMoveUp();
+        moveUp();
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        playerMoveLeft();
+        moveLeft();
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        playerMoveRight();
+        moveRight();
     }
 }
 
-void PlayerHandler::playerMoveDown()
+void PlayerHandler::moveDown()
 {
     player_->moveDown();
     auto reverseMovement = resolveCollision();
     if(reverseMovement){player_->moveUp();}
 }
 
-void PlayerHandler::playerMoveUp()
+void PlayerHandler::moveUp()
 {
     player_->moveUp();
     auto reverseMovement = resolveCollision();
     if(reverseMovement){player_->moveDown();}
 }
 
-void PlayerHandler::playerMoveLeft()
+void PlayerHandler::moveLeft()
 {
     player_->moveLeft();
     auto reverseMovement = resolveCollision();
     if(reverseMovement){player_->moveRight();}
 }
 
-void PlayerHandler::playerMoveRight()
+void PlayerHandler::moveRight()
 {
     player_->moveRight();
     auto reverseMovement = resolveCollision();

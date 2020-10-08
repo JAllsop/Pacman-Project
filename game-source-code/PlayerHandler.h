@@ -15,10 +15,10 @@ class PlayerHandler
         void render(shared_ptr<sf::RenderWindow> window);
 
         //movement
-        void playerMoveDown();
-        void playerMoveUp();
-        void playerMoveRight();
-        void playerMoveLeft();
+        void moveDown();
+        void moveUp();
+        void moveRight();
+        void moveLeft();
 
     private:
         shared_ptr<Entity> playerCollision();

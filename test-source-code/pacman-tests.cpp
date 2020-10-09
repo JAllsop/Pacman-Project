@@ -207,13 +207,12 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
         {
             SUBCASE("--Wall")
             {
-                //y = (enemies[0])->getY();
-                //enemyHandler->moveDown(0);
+                enemyHandler->moveDown(1);
                 CHECK(!enemyHandler->moveDown(1));
             }
             SUBCASE("--Door")
             {
-                //enemyHandler->moveRight(0);
+                enemyHandler->moveRight(1);
                 CHECK(!enemyHandler->moveRight(1));
             }
         }

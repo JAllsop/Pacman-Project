@@ -135,29 +135,30 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
                 testInstance.getMaze()->getPlayer()->setPosition(150, 250);
                 playerHandler->moveRight();
                 CHECK(playerHandler->getFruitsEaten() == fruits + 1);
+                SUBCASE("-Game Won")
+                {
+                    CHECK(playerHandler->getFruitsEaten() == testInstance.getMaze()->getMaxFruits());
+                }
             }
-            SUBCASE("--Door Blocks Player Key")
+            SUBCASE("--Key and Door Interactions")
             {
                 testInstance.getMaze()->getPlayer()->setPosition(200, 350);
                 x = testInstance.getMaze()->getPlayer()->getX();
                 playerHandler->moveRight();
+                //door blocks player
                 CHECK(testInstance.getMaze()->getPlayer()->getX() == x);
-            }
-            SUBCASE("--Key Unlocks Door")
-            {
+
                 x = testInstance.getMaze()->getPlayer()->getX();
                 playerHandler->moveLeft();
                 playerHandler->moveRight();
                 playerHandler->moveRight();
+                //player with key is not blocked by door
                 CHECK(testInstance.getMaze()->getPlayer()->getX() == x + blockSize);
-            }
-            SUBCASE("--Key Tracking")
-            {
+
                 x = testInstance.getMaze()->getPlayer()->getX();
-                playerHandler->moveLeft();
                 playerHandler->moveRight();
-                playerHandler->moveRight();
-                CHECK(testInstance.getMaze()->getPlayer()->getX() == x + blockSize);
+                //door blocks player (key tracking correct)
+                CHECK(testInstance.getMaze()->getPlayer()->getX() == x);
             }
         }
     }
@@ -219,10 +220,44 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
     }
     SUBCASE("Enemy and Player Interactions")
     {
+        testInstance.getMaze()->getPlayer()->setPosition(400, 650);
+        SUBCASE("-Player Dies")
+        {
+            auto testEnemy = testInstance.getMaze()->getEnemies()[2];
+            playerHandler->moveLeft();
+            SUBCASE("--Enemy Moves Into Player")
+            {
+                enemyHandler->moveRight(2);
+                //CHECK(enemyHandler->isPlayerDead());
+            }
+            SUBCASE("--Player Moves Into Enemy")
+            {
+                playerHandler->moveLeft();
+                //CHECK(playerHandler->isPlayerDead());
+            }
+        }
         SUBCASE("-Power Pellet")
         {
-            testInstance.getMaze()->getPlayer()->setPosition(150, 250);
+            playerHandler->moveRight();
+            auto testEnemy = testInstance.getMaze()->getEnemies()[2];
+            //pellet is detected and changes ghost colour
+            CHECK(testEnemy->getEntity()->getFillColor() == sf::Color::Magenta);
 
+            playerHandler->moveLeft();
+            enemyHandler->moveRight(2);
+            SUBCASE("--Enemy Does Not Move Into Player")
+            {
+                auto x = testEnemy->getX();
+                enemyHandler->moveRight(2);
+                CHECK(testEnemy->getX() == x);
+            }
+            SUBCASE("--Player Moves Into Enemy")
+            {
+                playerHandler->moveLeft();
+                //enemy respawn in center
+                CHECK(testEnemy->getX() == testEnemy->getInitialX());
+                CHECK(testEnemy->getY() == testEnemy->getInitialY());
+            }
         }
     }
     //system("pause");

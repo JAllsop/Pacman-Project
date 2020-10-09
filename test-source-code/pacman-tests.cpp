@@ -86,7 +86,7 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
     testInstance.init("resources/maze_test.txt");
     auto playerHandler = testInstance.getPlayerHandler();
     auto enemyHandler = testInstance.getEnemyHandler();
-    //testInstance.run();
+    //testInstance.render(); //view test maze
 
     SUBCASE("Player Traversal:")
     {
@@ -261,7 +261,7 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
             }
         }
     }
-    //system("pause");
+    //system("pause"); //to view test maze
 }
 
 //ensures console doesn't close upon test completion when running .exe

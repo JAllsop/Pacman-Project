@@ -217,6 +217,14 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
             }
         }
     }
+    SUBCASE("Enemy and Player Interactions")
+    {
+        SUBCASE("-Power Pellet")
+        {
+            testInstance.getMaze()->getPlayer()->setPosition(150, 250);
+
+        }
+    }
     //system("pause");
 }
 

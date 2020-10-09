@@ -21,6 +21,8 @@ class PlayerHandler
 
         int getFruitsEaten();
 
+        bool getPlayerState();
+
     private:
         shared_ptr<Entity> playerCollision();
         bool resolveCollision();

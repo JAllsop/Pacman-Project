@@ -272,3 +272,8 @@ void PlayerHandler::render(shared_ptr<sf::RenderWindow> window)
 
     window->display();
 }
+
+bool PlayerHandler::getPlayerState()
+{
+    return isPlayerDead;
+}

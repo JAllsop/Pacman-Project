@@ -16,6 +16,8 @@ class EnemyHandler
         bool moveRight(int enemyNum);
         bool moveLeft(int enemyNum);
 
+        bool getPlayerState();
+
     protected:
 
     private:

@@ -135,6 +135,7 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
                 testInstance.getMaze()->getPlayer()->setPosition(150, 250);
                 playerHandler->moveRight();
                 CHECK(playerHandler->getFruitsEaten() == fruits + 1);
+
                 SUBCASE("-Game Won")
                 {
                     CHECK(playerHandler->getFruitsEaten() == testInstance.getMaze()->getMaxFruits());
@@ -228,12 +229,12 @@ TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout f
             SUBCASE("--Enemy Moves Into Player")
             {
                 enemyHandler->moveRight(2);
-                //CHECK(enemyHandler->isPlayerDead());
+                CHECK(enemyHandler->getPlayerState());
             }
             SUBCASE("--Player Moves Into Enemy")
             {
                 playerHandler->moveLeft();
-                //CHECK(playerHandler->isPlayerDead());
+                CHECK(playerHandler->getPlayerState());
             }
         }
         SUBCASE("-Power Pellet")

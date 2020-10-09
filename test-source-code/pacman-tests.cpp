@@ -79,7 +79,7 @@ TEST_CASE("Enemy Basic Movement")
     }
 }
 
-TEST_CASE("Entity Interactions")
+TEST_CASE("Entity Interactions")//refer to test maze_test.txt for level layout for performing tests
 {
     auto window = make_shared<sf::RenderWindow>(sf::VideoMode(1600, 900), "Unit Test");
     auto testInstance = MazeHandler(window);
@@ -127,6 +127,94 @@ TEST_CASE("Entity Interactions")
                 playerHandler->moveRight();
                 playerHandler->moveRight();
                 CHECK(testInstance.getMaze()->getPlayer()->getX() == x + blockSize);
+
+            }
+            SUBCASE("--Fruit")
+            {
+                auto fruits = playerHandler->getFruitsEaten();
+                testInstance.getMaze()->getPlayer()->setPosition(150, 250);
+                playerHandler->moveRight();
+                CHECK(playerHandler->getFruitsEaten() == fruits + 1);
+            }
+            SUBCASE("--Door Blocks Player Key")
+            {
+                testInstance.getMaze()->getPlayer()->setPosition(200, 350);
+                x = testInstance.getMaze()->getPlayer()->getX();
+                playerHandler->moveRight();
+                CHECK(testInstance.getMaze()->getPlayer()->getX() == x);
+            }
+            SUBCASE("--Key Unlocks Door")
+            {
+                x = testInstance.getMaze()->getPlayer()->getX();
+                playerHandler->moveLeft();
+                playerHandler->moveRight();
+                playerHandler->moveRight();
+                CHECK(testInstance.getMaze()->getPlayer()->getX() == x + blockSize);
+            }
+            SUBCASE("--Key Tracking")
+            {
+                x = testInstance.getMaze()->getPlayer()->getX();
+                playerHandler->moveLeft();
+                playerHandler->moveRight();
+                playerHandler->moveRight();
+                CHECK(testInstance.getMaze()->getPlayer()->getX() == x + blockSize);
+            }
+        }
+    }
+    SUBCASE("Enemy Traversal:")
+    {
+        auto y{0};
+        auto x{0};
+        auto enemies = testInstance.getMaze()->getEnemies();
+        SUBCASE("-Standard Movement")
+        {
+            SUBCASE("--Initial Y Position")
+            {
+                y = (enemies[0])->getY();
+                CHECK(enemies[0]->getInitialY() == y);
+            }
+            SUBCASE("--Initial X Position")
+            {
+                x = (enemies[0])->getX();
+                CHECK(enemies[0]->getInitialX() == x);
+            }
+            SUBCASE("--Move Down")
+            {
+                y = (enemies[0])->getY();
+                enemyHandler->moveDown(0);
+                CHECK(enemies[0]->getY() == y + blockSize);
+            }
+            SUBCASE("--Move Up")
+            {
+                y = (enemies[0])->getY();
+                enemyHandler->moveUp(0);
+                CHECK(enemies[0]->getY() == y - blockSize);
+            }
+            SUBCASE("--Move Left")
+            {
+                x = (enemies[0])->getX();
+                enemyHandler->moveLeft(0);
+                CHECK(enemies[0]->getX() == x - blockSize);
+            }
+            SUBCASE("--Move Right")
+            {
+                x = (enemies[0])->getX();
+                enemyHandler->moveRight(0);
+                CHECK(enemies[0]->getX() == x + blockSize);
+            }
+        }
+        SUBCASE("-Collisions")
+        {
+            SUBCASE("--Wall")
+            {
+                //y = (enemies[0])->getY();
+                //enemyHandler->moveDown(0);
+                CHECK(!enemyHandler->moveDown(1));
+            }
+            SUBCASE("--Door")
+            {
+                //enemyHandler->moveRight(0);
+                CHECK(!enemyHandler->moveRight(1));
             }
         }
     }

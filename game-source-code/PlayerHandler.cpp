@@ -23,6 +23,11 @@ PlayerHandler::~PlayerHandler()
     //dtor
 }
 
+int PlayerHandler::getFruitsEaten()
+{
+    return fruits;
+}
+
 tuple<bool, bool> PlayerHandler::run()
 {
     if(playerClock.getElapsedTime() >= playerSpeed)

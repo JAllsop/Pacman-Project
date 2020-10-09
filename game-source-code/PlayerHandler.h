@@ -14,11 +14,12 @@ class PlayerHandler
         void update();
         void render(shared_ptr<sf::RenderWindow> window);
 
-        //movement
         void moveDown();
         void moveUp();
         void moveRight();
         void moveLeft();
+
+        int getFruitsEaten();
 
     private:
         shared_ptr<Entity> playerCollision();

@@ -192,4 +192,3 @@ shared_ptr<Entity> EnemyHandler::enemyCollision(shared_ptr<Enemy> enemy)
     }
     return enemy;
 }
-
